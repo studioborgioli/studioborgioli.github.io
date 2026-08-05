@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cercate un nuovo amministratore? — Studio Borgioli</title>
+<meta name="description" content="Cambiare amministratore di condominio è più semplice di quanto sembri. Studio Borgioli gestisce il subentro completo: documenti, fornitori, conti. Preventivo senza impegno.">
+<style>
+  :root {
+    --blu: #14385c; --blu-scuro: #0d2740; --ottone: #b98a2f; --ottone-chiaro: #d4a94a;
+    --carta: #faf9f6; --bianco: #ffffff; --testo: #26303a; --testo-2: #5a6673; --linea: #e5e2da;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--testo); background: var(--carta); line-height: 1.65; }
+  a { color: var(--blu); }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px; }
+  header { position: sticky; top: 0; z-index: 50; background: rgba(250,249,246,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--linea); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 700; font-size: 19px; color: var(--blu); text-decoration: none; }
+  .logo span { color: var(--ottone); }
+  .nav a.back { text-decoration: none; color: var(--testo-2); font-size: 15px; font-weight: 500; }
+  .hero { background: linear-gradient(160deg, var(--blu) 0%, var(--blu-scuro) 100%); color: var(--bianco); padding: 72px 0 64px; }
+  .hero h1 { font-size: clamp(28px, 4.5vw, 42px); line-height: 1.15; max-width: 700px; letter-spacing: -0.01em; }
+  .hero h1 em { font-style: normal; color: var(--ottone-chiaro); }
+  .hero p { margin-top: 16px; font-size: 18px; max-width: 640px; color: #cdd8e4; }
+  section { padding: 64px 0; }
+  section.alt { background: var(--bianco); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+  .kicker { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ottone); }
+  h2 { font-size: clamp(22px, 3vw, 30px); margin: 8px 0 16px; color: var(--blu); }
+  .lead { font-size: 17px; color: var(--testo-2); max-width: 700px; }
+  .motivi { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 30px; }
+  .motivo { background: var(--bianco); border: 1px solid var(--linea); border-radius: 14px; padding: 24px; }
+  section.alt .motivo { background: var(--carta); }
+  .motivo h3 { color: var(--blu); font-size: 17px; margin-bottom: 8px; }
+  .motivo p { font-size: 15px; color: var(--testo-2); }
+  .passi { counter-reset: passo; display: grid; gap: 0; margin-top: 30px; max-width: 720px; }
+  .passo { position: relative; padding: 0 0 30px 62px; }
+  .passo::before { counter-increment: passo; content: counter(passo); position: absolute; left: 0; top: 0;
+    width: 42px; height: 42px; border-radius: 50%; background: var(--blu); color: var(--bianco);
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; }
+  .passo:not(:last-child)::after { content: ''; position: absolute; left: 20px; top: 46px; bottom: 4px; width: 2px; background: var(--linea); }
+  .passo b { color: var(--blu); font-size: 16.5px; }
+  .passo p { font-size: 15px; color: var(--testo-2); margin-top: 4px; }
+  .cta-box { background: linear-gradient(160deg, var(--blu) 0%, var(--blu-scuro) 100%); border-radius: 18px; color: var(--bianco); padding: 44px; text-align: center; }
+  .cta-box h2 { color: var(--bianco); }
+  .cta-box p { color: #cdd8e4; max-width: 560px; margin: 0 auto 26px; }
+  .btn { display: inline-block; text-decoration: none; font-weight: 600; font-size: 16px; padding: 13px 26px; border-radius: 10px; margin: 6px; }
+  .btn-oro { background: var(--ottone); color: var(--bianco); }
+  .btn-oro:hover { background: var(--ottone-chiaro); }
+  .btn-ghost { border: 1.5px solid rgba(255,255,255,.45); color: var(--bianco); }
+  .nota { font-size: 13.5px; color: var(--testo-2); margin-top: 18px; }
+  footer { background: var(--blu-scuro); color: #9fb2c4; padding: 30px 0; font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: #cdd8e4; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">Studio <span>Borgioli</span></a>
+    <a class="back" href="index.html">← Torna al sito</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Cambiare amministratore è <em>più semplice</em> di quanto pensiate.</h1>
+    <p>Se il vostro condominio non si sente seguito, la legge vi permette di scegliere un nuovo amministratore in qualsiasi assemblea. Del passaggio ci occupiamo noi, dall'inizio alla fine.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Perché sceglierci</div>
+    <h2>Quello che un condominio dovrebbe potersi aspettare</h2>
+    <div class="motivi">
+      <div class="motivo"><h3>Una persona che risponde</h3><p>Ogni condominio ha una referente dedicata che lo conosce davvero. Tre sedi aperte tutti i giorni feriali, telefono, WhatsApp ed email: quando chiamate, qualcuno c'è.</p></div>
+      <div class="motivo"><h3>Conti chiari, sempre consultabili</h3><p>Bilanci leggibili, riparto trasparente delle spese, e il portale MioCondominio dove ognuno vede i propri documenti e la propria situazione in ogni momento.</p></div>
+      <div class="motivo"><h3>Scadenze sotto controllo</h3><p>Sicurezza antincendio, ascensori, caldaie, assicurazioni: le scadenze del vostro edificio sono censite e monitorate, non affidate alla memoria.</p></div>
+      <div class="motivo"><h3>Assemblee comode</h3><p>In presenza e in videoconferenza insieme: partecipa anche chi è lontano o non può muoversi. Convocazioni puntuali e verbali rapidi.</p></div>
+      <div class="motivo"><h3>Manutenzioni seguite</h3><p>Rete di fornitori qualificati e interventi tracciati dall'apertura alla chiusura: sapete sempre a che punto è una riparazione.</p></div>
+      <div class="motivo"><h3>Dal 1998, e di famiglia</h3><p>Quasi trent'anni di esperienza e una seconda generazione già al lavoro: la garanzia di uno studio che c'era ieri e ci sarà domani.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="kicker">Come funziona</div>
+    <h2>Il subentro, passo per passo</h2>
+    <p class="lead">Non serve aspettare la scadenza del mandato: l'assemblea può nominare un nuovo amministratore in qualunque momento, con le maggioranze previste dal codice civile.</p>
+    <div class="passi" style="margin-top:34px">
+      <div class="passo"><b>Ci incontriamo, senza impegno</b><p>Visitiamo il condominio, ascoltiamo le esigenze e prepariamo un preventivo scritto, chiaro e senza voci nascoste.</p></div>
+      <div class="passo"><b>L'assemblea decide</b><p>Se il condominio sceglie di cambiare, basta inserire la nomina all'ordine del giorno. Se serve, vi aiutiamo con le formalità della convocazione.</p></div>
+      <div class="passo"><b>Gestiamo noi il passaggio di consegne</b><p>Ritiriamo documenti, registri e conti dal precedente amministratore, verifichiamo la situazione contabile e censiamo le scadenze tecniche dell'edificio.</p></div>
+      <div class="passo"><b>Il condominio riparte</b><p>Entro poche settimane tutto è operativo: referente assegnata, fornitori contattati, condòmini registrati sul portale. E ve ne accorgete.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta-box">
+      <h2>Parliamone</h2>
+      <p>Un preventivo non costa nulla e non impegna a niente. Scriveteci due righe sul vostro condominio — quante unità, dove si trova — e vi rispondiamo entro un giorno lavorativo.</p>
+      <a class="btn btn-oro" href="mailto:studio@studioborgioli.com?subject=Richiesta%20preventivo%20amministrazione%20condominio&body=Buongiorno%2C%0A%0Avorremmo%20un%20preventivo%20per%20l'amministrazione%20del%20nostro%20condominio.%0A%0AIndirizzo%20del%20condominio%3A%20%0ANumero%20di%20unit%C3%A0%3A%20%0ARecapito%20telefonico%3A%20%0A%0AGrazie">Richiedi un preventivo via email</a>
+      <a class="btn btn-ghost" href="https://wa.me/393296039006?text=Buongiorno%2C%20vorrei%20informazioni%20per%20un%20preventivo%20di%20amministrazione%20condominiale.">Scrivici su WhatsApp</a>
+      <div class="nota" style="color:#9fb2c4">Oppure chiamate lo 055 872 2065 negli orari di apertura delle sedi.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© Studio Borgioli S.a.s. — Signa (FI) · dal 1998</div>
+    <div><a href="index.html">Home</a> · <a href="mailto:studio@studioborgioli.com">studio@studioborgioli.com</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
