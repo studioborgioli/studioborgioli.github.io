@@ -196,7 +196,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* --------------------------------------------------------------- navbar -- */
 .navbar {
   position: sticky; top: 0; z-index: 100;
-  background: var(--color-primary); color: #fff;
+  background: rgba(255,255,255,.96);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid rgba(26,58,92,.12);
+  color: var(--color-primary);
 }
 .navbar__row {
   display: flex; align-items: center; justify-content: space-between;
@@ -204,7 +208,49 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 @media (max-width: 767px) { .navbar__row { min-height: 56px; } }
 
-.logo { display: flex; align-items: baseline; gap: var(--space-3); text-decoration: none; color: #fff; }
+.logo { display: flex; align-items: center; text-decoration: none; }
+.logo__marchio { height: 46px; width: 172px; overflow: visible; }
+@media (max-width: 900px) { .logo__marchio { height: 42px; width: 158px; } }
+
+/* Sotto i 620px resta il solo monogramma: il nome per esteso non entrerebbe
+   e verrebbe schiacciato. Si riduce la finestra del disegno, non le lettere. */
+@media (max-width: 620px) {
+  .logo__marchio { width: 62px; }
+  .logo__nome, .logo__coda { display: none; }
+}
+
+.logo__s, .logo__b, .logo__nome {
+  font-family: var(--font-display); font-weight: 700; fill: var(--color-primary);
+}
+.logo__s, .logo__b { font-size: 54px; letter-spacing: 1px; }
+.logo__nome { font-size: 30px; }
+.logo__coda {
+  font-family: var(--font-display); font-size: 10px; letter-spacing: 1.8px;
+  fill: var(--color-primary);
+}
+.logo__filo { fill: var(--color-accent); }
+
+/* entrata: le lettere si incontrano una volta sola, poi stanno ferme */
+.logo__s { animation: monoS .7s cubic-bezier(.22,1,.36,1) both; }
+.logo__b { animation: monoB .7s cubic-bezier(.22,1,.36,1) both; }
+.logo__filo { transform-origin: 24px 72px; animation: monoFilo .5s .45s ease-out both; }
+@keyframes monoS { from { transform: translateX(-16px); opacity: 0 } to { transform: none; opacity: 1 } }
+@keyframes monoB { from { transform: translateX(16px);  opacity: 0 } to { transform: none; opacity: 1 } }
+@keyframes monoFilo { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@media (prefers-reduced-motion: reduce) {
+  .logo__s, .logo__b, .logo__filo { animation: none; opacity: 1; transform: none; }
+}
+
+/* in fondo alla pagina lo stesso marchio, in negativo sul blu scuro */
+.piede__marchio { height: 58px; width: 218px; overflow: visible; }
+.piede__marchio .logo__s, .piede__marchio .logo__b,
+.piede__marchio .logo__nome, .piede__marchio .logo__coda { fill: #fff; }
+/* sul blu scuro il rosso di marca si spegne: qui una versione appena schiarita,
+   così il filetto resta visibile senza cambiare colore percepito */
+.piede__marchio .logo__filo { fill: #EE5566; }
+.piede__marchio .logo__s, .piede__marchio .logo__b,
+.piede__marchio .logo__filo { animation: none; opacity: 1; transform: none; }
+@media (max-width: 480px) { .piede__marchio { height: 50px; width: 188px; } }
 
 /* Monogramma: la S e la B scivolano fino a incontrarsi, una volta sola al
    caricamento, poi restano ferme. Il filo rosso si tira sotto le lettere. */
@@ -223,22 +269,13 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .logo__s, .logo__b, .logo__filo { animation: none; opacity: 1; transform: none; }
 }
 
-.piede__filo {
-  display: block; width: 62px; height: 3px; border-radius: 2px;
-  background: var(--color-accent); margin-top: var(--space-2);
-}
-.logo__name {
-  font-family: var(--font-display); font-weight: 700; font-size: 20px;
-  letter-spacing: .02em;
-}
-.logo__sub {
-  font-size: var(--fs-overline); font-weight: 700; letter-spacing: .16em;
-  text-transform: uppercase; color: #A8C4DC;
-}
+
+
+
 
 .nav { display: flex; align-items: center; gap: var(--space-1); }
 .nav__link {
-  position: relative; text-decoration: none; color: #fff; font-weight: 700;
+  position: relative; text-decoration: none; color: var(--color-primary); font-weight: 700;
   font-size: 15px; padding: var(--space-2) var(--space-3);
 }
 .nav__link::after {
@@ -250,7 +287,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .nav__tel {
   display: inline-flex; align-items: center; gap: var(--space-2);
-  color: #fff; text-decoration: none; font-weight: 700; font-size: 15px;
+  color: var(--color-primary); text-decoration: none; font-weight: 700; font-size: 15px;
   padding: var(--space-2) var(--space-3); white-space: nowrap;
 }
 .nav__tel:hover { text-decoration: underline; }
@@ -266,7 +303,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .nav__cta:active { transform: scale(.98); }
 
 @media (max-width: 1023px) { .nav__link { display: none; } }
-@media (max-width: 480px) { .nav__tel span { display: none; } .logo__sub { display: none; } }
+@media (max-width: 480px) { .nav__tel span { display: none; } }
 
 /* -------------------------------------------------------------- bottoni -- */
 .btn {
@@ -584,7 +621,7 @@ blockquote cite {
 .piede a { color: #E4EDF5; }
 .piede__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: var(--space-12); }
 @media (max-width: 899px) { .piede__grid { grid-template-columns: 1fr; gap: var(--space-8); } }
-.piede__logo { font-family: var(--font-display); font-weight: 700; font-size: 20px; color: #fff; }
+
 .piede__tagline {
   font-family: var(--font-display); font-style: italic; font-size: 16px;
   color: #A8C4DC; margin-top: var(--space-2);
