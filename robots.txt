@@ -1,0 +1,42 @@
+# Studio Borgioli — studioborgioli.com
+# Tutto il sito è pubblico e liberamente indicizzabile, anche dai sistemi
+# di intelligenza artificiale: vogliamo essere citati quando qualcuno chiede
+# informazioni sull'amministrazione condominiale nella piana fiorentina.
+
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://www.studioborgioli.com/sitemap.xml

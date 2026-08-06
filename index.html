@@ -3,221 +3,353 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Studio Borgioli — Amministrazione condominiale a Signa, Lastra a Signa e Firenze</title>
-<meta name="description" content="Studio Borgioli amministra condomini dal 1998 tra Signa, Lastra a Signa e Firenze. Tre sedi, un team di 8 persone, assemblee anche in videoconferenza e documenti sempre a portata di mano.">
-<style>
-  :root {
-    --blu: #14385c; --blu-scuro: #0d2740; --ottone: #b98a2f; --ottone-chiaro: #d4a94a;
-    --carta: #faf9f6; --bianco: #ffffff; --testo: #26303a; --testo-2: #5a6673;
-    --linea: #e5e2da;
-  }
-  * { box-sizing: border-box; margin: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--testo); background: var(--carta); line-height: 1.65; }
-  img { max-width: 100%; }
-  a { color: var(--blu); }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
-
-  /* Header */
-  header { position: sticky; top: 0; z-index: 50; background: rgba(250,249,246,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--linea); }
-  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .logo { font-weight: 700; font-size: 19px; color: var(--blu); text-decoration: none; letter-spacing: .01em; }
-  .logo span { color: var(--ottone); }
-  nav.menu { display: flex; gap: 26px; }
-  nav.menu a { text-decoration: none; color: var(--testo-2); font-size: 15px; font-weight: 500; }
-  nav.menu a:hover { color: var(--blu); }
-  nav.menu a.cta { color: var(--bianco); background: var(--blu); padding: 8px 16px; border-radius: 8px; }
-  nav.menu a.cta:hover { background: var(--blu-scuro); }
-  @media (max-width: 760px) { nav.menu a:not(.cta) { display: none; } }
-
-  /* Hero */
-  .hero { background: linear-gradient(160deg, var(--blu) 0%, var(--blu-scuro) 100%); color: var(--bianco); padding: 84px 0 76px; }
-  .hero h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.15; font-weight: 700; max-width: 720px; letter-spacing: -0.01em; }
-  .hero h1 em { font-style: normal; color: var(--ottone-chiaro); }
-  .hero p { margin-top: 18px; font-size: 19px; max-width: 620px; color: #cdd8e4; }
-  .hero .azioni { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn { display: inline-block; text-decoration: none; font-weight: 600; font-size: 16px; padding: 13px 24px; border-radius: 10px; }
-  .btn-oro { background: var(--ottone); color: var(--bianco); }
-  .btn-oro:hover { background: var(--ottone-chiaro); }
-  .btn-ghost { border: 1.5px solid rgba(255,255,255,.45); color: var(--bianco); }
-  .btn-ghost:hover { border-color: var(--bianco); }
-  .hero .numeri { margin-top: 52px; display: flex; gap: 46px; flex-wrap: wrap; }
-  .hero .numeri div { border-left: 3px solid var(--ottone); padding-left: 14px; }
-  .hero .numeri b { display: block; font-size: 28px; }
-  .hero .numeri span { font-size: 14px; color: #b7c5d4; }
-
-  /* Sezioni */
-  section { padding: 72px 0; }
-  section.alt { background: var(--bianco); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
-  .kicker { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ottone); }
-  h2 { font-size: clamp(24px, 3.5vw, 32px); margin: 8px 0 18px; color: var(--blu); letter-spacing: -0.01em; }
-  .lead { font-size: 17px; color: var(--testo-2); max-width: 700px; }
-
-  /* Storia */
-  .storia { display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items: start; }
-  @media (max-width: 820px) { .storia { grid-template-columns: 1fr; } }
-  .timeline { border-left: 2px solid var(--linea); padding-left: 22px; display: grid; gap: 18px; }
-  .timeline b { color: var(--blu); }
-  .timeline p { font-size: 15px; color: var(--testo-2); }
-
-  /* Team */
-  .team { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 34px; }
-  .persona { background: var(--carta); border: 1px solid var(--linea); border-radius: 14px; padding: 20px; }
-  section.alt .persona { background: var(--carta); }
-  .persona .avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--blu); color: var(--bianco); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; margin-bottom: 12px; }
-  .persona.oro .avatar { background: var(--ottone); }
-  .persona b { display: block; font-size: 16.5px; color: var(--blu); }
-  .persona span { font-size: 14px; color: var(--testo-2); }
-
-  /* Servizi */
-  .servizi { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 34px; }
-  .servizio { background: var(--bianco); border: 1px solid var(--linea); border-radius: 14px; padding: 26px; }
-  .servizio .icona { font-size: 30px; }
-  .servizio h3 { margin: 12px 0 8px; font-size: 18px; color: var(--blu); }
-  .servizio p { font-size: 15px; color: var(--testo-2); }
-  .servizio a { font-weight: 600; font-size: 15px; }
-
-  /* Sedi */
-  .sedi { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 34px; }
-  .sede { background: var(--bianco); border: 1px solid var(--linea); border-radius: 14px; padding: 26px; }
-  .sede h3 { color: var(--blu); font-size: 18px; }
-  .sede .via { margin: 6px 0 12px; font-size: 15px; }
-  .sede .orari { font-size: 14px; color: var(--testo-2); line-height: 1.8; }
-  .sede a.mappa { display: inline-block; margin-top: 12px; font-size: 14px; font-weight: 600; }
-
-  /* Contatti */
-  .contatti { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; margin-top: 30px; }
-  .contatto { border: 1px solid var(--linea); border-radius: 14px; padding: 22px; background: var(--carta); }
-  .contatto b { display: block; color: var(--blu); margin-bottom: 4px; font-size: 15px; }
-  .contatto a { font-size: 15.5px; font-weight: 600; text-decoration: none; word-break: break-all; }
-  .contatto span { display: block; font-size: 13px; color: var(--testo-2); margin-top: 4px; }
-
-  /* Banner amministratore */
-  .banner { background: linear-gradient(160deg, var(--blu) 0%, var(--blu-scuro) 100%); border-radius: 18px; color: var(--bianco); padding: 44px; display: flex; justify-content: space-between; align-items: center; gap: 26px; flex-wrap: wrap; }
-  .banner h2 { color: var(--bianco); margin: 0 0 8px; }
-  .banner p { color: #cdd8e4; max-width: 560px; }
-
-  footer { background: var(--blu-scuro); color: #9fb2c4; padding: 34px 0; font-size: 14px; }
-  footer .wrap { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
-  footer a { color: #cdd8e4; }
-</style>
+<title>Studio Borgioli — amministratore di condominio a Signa, Lastra a Signa e Firenze</title>
+<meta name="description" content="Studio Borgioli amministra condomìni dal 1998 tra Signa, Lastra a Signa e Firenze. Iscritto A.N.A.I.P. Tre sedi aperte senza appuntamento, assemblee anche in videoconferenza.">
+<link rel="canonical" href="https://www.studioborgioli.com/">
+<meta name="theme-color" content="#1A3A5C">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Studio Borgioli — amministratore di condominio a Signa, Lastra a Signa e Firenze">
+<meta property="og:description" content="Studio Borgioli amministra condomìni dal 1998 tra Signa, Lastra a Signa e Firenze. Iscritto A.N.A.I.P. Tre sedi aperte senza appuntamento, assemblee anche in videoconferenza.">
+<meta property="og:url" content="https://www.studioborgioli.com/">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Studio Borgioli">
+<meta property="og:image" content="https://www.studioborgioli.com/anteprima-social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Studio Borgioli — amministrazione condominiale dal 1998">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icona-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icona-192.png">
+<link rel="preload" href="font/pagella-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="font/pagella-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="stile.css">
 </head>
 <body>
-
-<header>
-  <div class="wrap nav">
-    <a class="logo" href="#">Studio <span>Borgioli</span></a>
-    <nav class="menu">
-      <a href="#storia">Lo studio</a>
-      <a href="#team">Il team</a>
-      <a href="#servizi">Servizi</a>
-      <a href="#sedi">Sedi e contatti</a>
-      <a class="cta" href="amministratore.html">Cerchi un amministratore?</a>
+<a class="salta" href="#principale">Vai al contenuto</a>
+<header class="navbar">
+  <div class="container navbar__row">
+    <a class="logo" href="index.html" aria-label="Studio Borgioli, torna alla home">
+      <svg class="logo__mark" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+        <text class="logo__s" x="16" y="60">S</text>
+        <text class="logo__b" x="47" y="60">B</text>
+        <rect class="logo__filo" x="17" y="70" width="62" height="4" rx="2"/>
+      </svg>
+      <span class="logo__name">Studio Borgioli</span>
+      <span class="logo__sub">dal 1998</span>
+    </a>
+    <nav class="nav" aria-label="Navigazione principale">
+      <a class="nav__link" href="index.html" aria-current="page">Home</a><a class="nav__link" href="servizi.html">Servizi</a><a class="nav__link" href="chi-siamo.html">Chi siamo</a><a class="nav__link" href="domande.html">Domande frequenti</a><a class="nav__link" href="contatti.html">Contatti</a>
+      <a class="nav__tel" href="tel:+390558722065"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg><span>055 872 2065</span></a>
+      <a class="nav__cta" href="amministratore.html">Richiedi un preventivo</a>
     </nav>
   </div>
 </header>
-
-<div class="hero">
-  <div class="wrap">
-    <h1>Il vostro condominio, amministrato con <em>cura e chiarezza</em> dal 1998.</h1>
-    <p>Siamo uno studio familiare con tre sedi tra Signa, Lastra a Signa e Firenze. Amministriamo oltre cento condomini unendo l'esperienza di quasi trent'anni a strumenti semplici e moderni.</p>
-    <div class="azioni">
-      <a class="btn btn-oro" href="amministratore.html">Richiedi un preventivo</a>
-      <a class="btn btn-ghost" href="#sedi">Contattaci</a>
+<main id="principale">
+  <section class="hero">
+    <div class="scena" aria-hidden="true" data-scena>
+      <svg viewBox="0 0 520 360" preserveAspectRatio="xMaxYMax slice">
+        <g class="scena__strato" data-prof="0.6">
+          <rect x="18" y="150" width="128" height="210" rx="3"/>
+          <rect x="40" y="176" width="26" height="34" rx="2"/><rect x="76" y="176" width="26" height="34" rx="2"/>
+          <rect x="40" y="228" width="26" height="34" rx="2"/><rect x="76" y="228" width="26" height="34" rx="2"/>
+          <rect x="40" y="280" width="26" height="34" rx="2"/><rect x="76" y="280" width="26" height="34" rx="2"/>
+        </g>
+        <g class="scena__strato" data-prof="1.1">
+          <rect x="168" y="96" width="150" height="264" rx="3"/>
+          <rect x="192" y="126" width="28" height="36" rx="2"/><rect x="232" y="126" width="28" height="36" rx="2"/><rect x="272" y="126" width="28" height="36" rx="2"/>
+          <rect x="192" y="182" width="28" height="36" rx="2"/><rect x="232" y="182" width="28" height="36" rx="2" class="scena__accesa"/><rect x="272" y="182" width="28" height="36" rx="2"/>
+          <rect x="192" y="238" width="28" height="36" rx="2"/><rect x="232" y="238" width="28" height="36" rx="2"/><rect x="272" y="238" width="28" height="36" rx="2"/>
+          <rect x="216" y="300" width="56" height="60" rx="3" class="scena__portone"/>
+        </g>
+        <g class="scena__strato" data-prof="1.7">
+          <rect x="340" y="138" width="120" height="222" rx="3"/>
+          <rect x="362" y="166" width="26" height="34" rx="2"/><rect x="400" y="166" width="26" height="34" rx="2"/>
+          <rect x="362" y="218" width="26" height="34" rx="2"/><rect x="400" y="218" width="26" height="34" rx="2"/>
+          <rect x="362" y="270" width="26" height="34" rx="2"/><rect x="400" y="270" width="26" height="34" rx="2"/>
+        </g>
+      </svg>
     </div>
-    <div class="numeri">
-      <div><b>1998</b><span>anno di fondazione</span></div>
-      <div><b>120+</b><span>condomini amministrati</span></div>
-      <div><b>3</b><span>sedi sul territorio</span></div>
-      <div><b>8</b><span>persone al vostro servizio</span></div>
-    </div>
-  </div>
-</div>
-
-<section id="storia">
-  <div class="wrap storia">
-    <div>
-      <div class="kicker">Lo studio</div>
-      <h2>Una storia di famiglia, una professione che cambia</h2>
-      <p class="lead">Lo Studio Borgioli nasce nel 1998, quando le nuove norme sul condominio richiedono una gestione sempre più professionale. Gianni Borgioli lo fonda a Signa; negli anni lo studio cresce, entra la seconda generazione con Federico, e il metodo resta lo stesso: conoscere ogni condominio come se fosse l'unico.</p>
-      <p class="lead" style="margin-top:14px">Oggi affianchiamo alla gestione tradizionale — assemblee, bilanci, manutenzioni, pratiche — gli strumenti digitali che rendono tutto più rapido e trasparente, senza mai perdere il rapporto diretto con le persone.</p>
-    </div>
-    <div class="timeline">
-      <div><b>1998</b><p>Gianni Borgioli fonda lo studio a Signa.</p></div>
-      <div><b>Anni 2000</b><p>Lo studio cresce e diventa un punto di riferimento nella piana fiorentina.</p></div>
-      <div><b>Seconda generazione</b><p>Entra Federico Borgioli: continuità familiare e spinta all'innovazione.</p></div>
-      <div><b>Oggi</b><p>Tre sedi, otto persone, assemblee anche online e documenti a portata di click.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="alt" id="team">
-  <div class="wrap">
-    <div class="kicker">Le persone</div>
-    <h2>Un team dedicato, per nome e per ruolo</h2>
-    <p class="lead">Ogni condominio ha una persona di riferimento che lo segue tutto l'anno: chi chiama lo studio parla con chi conosce davvero la sua situazione.</p>
-    <div class="team">
-      <div class="persona oro"><div class="avatar">GB</div><b>Gianni Borgioli</b><span>Amministratore · fondatore</span></div>
-      <div class="persona oro"><div class="avatar">FB</div><b>Federico Borgioli</b><span>Amministrazione e innovazione</span></div>
-      <div class="persona"><div class="avatar">C</div><b>Claudia</b><span>Segreteria e coordinamento</span></div>
-      <div class="persona"><div class="avatar">R</div><b>Rossella</b><span>Fiscalità, assicurazioni e sinistri</span></div>
-      <div class="persona"><div class="avatar">E</div><b>Eleonora</b><span>Contabilità e bilanci</span></div>
-      <div class="persona"><div class="avatar">F</div><b>Francesca A.</b><span>Contabilità e bilanci</span></div>
-      <div class="persona"><div class="avatar">F</div><b>Francesca C.</b><span>Contabilità e bilanci</span></div>
-      <div class="persona"><div class="avatar">C</div><b>Chiara</b><span>Contabilità e segreteria</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="servizi">
-  <div class="wrap">
-    <div class="kicker">Come lavoriamo</div>
-    <h2>La gestione di sempre, con strumenti di oggi</h2>
-    <div class="servizi">
-      <div class="servizio"><div class="icona">🏢</div><h3>Gestione completa</h3><p>Assemblee, bilanci preventivi e consuntivi, riparto delle spese, rapporti con fornitori e manutenzioni, pratiche fiscali, assicurative e legali: tutto sotto un unico tetto.</p></div>
-      <div class="servizio"><div class="icona">💬</div><h3>WhatsApp diretto</h3><p>Un canale immediato per comunicazioni e documenti, senza attese al telefono.</p><a href="https://wa.me/393296039006">+39 329 603 9006 (solo messaggi)</a></div>
-      <div class="servizio"><div class="icona">🎥</div><h3>Assemblee anche online</h3><p>Le assemblee si tengono in presenza e in videoconferenza con Google Meet: partecipi anche da fuori, dal telefono o dal computer.</p></div>
-      <div class="servizio"><div class="icona">📱</div><h3>MioCondominio</h3><p>Il portale e l'app dove ogni condomino consulta i propri documenti, i bilanci e la propria situazione: sempre disponibili, senza doverli chiedere.</p><a href="https://www.miocondominio.eu" rel="noopener">Accedi al portale</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="alt" id="sedi">
-  <div class="wrap">
-    <div class="kicker">Dove siamo</div>
-    <h2>Tre sedi, una squadra sola</h2>
-    <div class="sedi">
-      <div class="sede"><h3>Signa</h3><div class="via">Via Roma 266</div><div class="orari">Lun–Ven · 10:00–13:00</div><a class="mappa" href="https://maps.google.com/?q=Via+Roma+266,+Signa+FI" rel="noopener">Apri in Google Maps →</a></div>
-      <div class="sede"><h3>Firenze (Isolotto)</h3><div class="via">Via Torcicoda 55/R</div><div class="orari">Lun–Ven · 10:00–13:00<br>Mar e Gio · 15:30–18:00</div><a class="mappa" href="https://maps.google.com/?q=Via+Torcicoda+55R,+Firenze" rel="noopener">Apri in Google Maps →</a></div>
-      <div class="sede"><h3>Lastra a Signa</h3><div class="via">Via Livornese 164</div><div class="orari">Lun–Gio · 15:30–18:30</div><a class="mappa" href="https://maps.google.com/?q=Via+Livornese+164,+Lastra+a+Signa+FI" rel="noopener">Apri in Google Maps →</a></div>
-    </div>
-    <div class="contatti">
-      <div class="contatto"><b>Telefono</b><a href="tel:+390558722065">055 872 2065</a><span>negli orari di apertura</span></div>
-      <div class="contatto"><b>WhatsApp</b><a href="https://wa.me/393296039006">329 603 9006</a><span>solo messaggi di testo</span></div>
-      <div class="contatto"><b>Email</b><a href="mailto:studio@studioborgioli.com">studio@studioborgioli.com</a><span>rispondiamo in giornata lavorativa</span></div>
-      <div class="contatto"><b>PEC</b><a href="mailto:studioborgiolisas@pec.it">studioborgiolisas@pec.it</a><span>per comunicazioni formali</span></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="banner">
-      <div>
-        <h2>State pensando di cambiare amministratore?</h2>
-        <p>Il passaggio è più semplice di quanto sembri: ci occupiamo noi di tutto il subentro, dai documenti ai fornitori. Parliamone senza impegno.</p>
+    <div class="container">
+      <h1 class="hero__title">Il tuo condominio gestito con precisione e cura dal 1998</h1>
+      <p class="hero__sub">Amministriamo condomìni a Signa, Lastra a Signa e Firenze. Tre
+        sedi aperte al pubblico tutta la settimana, senza appuntamento: chi chiama o passa
+        parla con qualcuno che conosce il suo stabile, non con un centralino.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="amministratore.html">Richiedi un preventivo</a>
+        <a class="btn btn--outline" href="tel:+390558722065"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg> Chiama 055 872 2065</a>
+        <a class="btn btn--outline" href="https://wa.me/393296039006"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg> Scrivi su WhatsApp</a>
       </div>
-      <a class="btn btn-oro" href="amministratore.html">Scopri come funziona</a>
+      <p class="hero__note">Rispondiamo entro due giorni lavorativi. WhatsApp solo messaggi di testo.</p>
+    </div>
+  </section>
+  <div class="proof"><div class="container proof__row">
+  <div class="proof__item"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg><div><b>A.N.A.I.P.</b><br><span>iscritti dal 1998, con la presidenza provinciale</span></div></div>
+  <div class="proof__item"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/></svg><div><b>Dal 1998</b><br><span>gestione familiare, seconda generazione</span></div></div>
+  <div class="proof__item"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg><div><b>3 sedi</b><br><span>Signa · Lastra a Signa · Firenze</span></div></div>
+</div></div>
+  <!-- MODIFICA O CANCELLA QUESTO BLOCCO quando la chiusura è passata. -->
+  <div class="avviso">
+    <div class="container avviso__row">
+      <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
+      <p><b>Chiusura estiva:</b> lo studio è chiuso dal 10 al 21 agosto e riapre lunedì 24.
+      Per le emergenze scrivete a <a href="mailto:studio@studioborgioli.com?subject=URGENTE%20%E2%80%94%20%5Bnome%20del%20condominio%5D">studio@studioborgioli.com</a>
+      indicando il nome del condominio nell'oggetto.</p>
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="wrap">
-    <div>© Studio Borgioli S.a.s. — Signa (FI) · dal 1998</div>
-    <div><a href="mailto:studio@studioborgioli.com">studio@studioborgioli.com</a> · <a href="tel:+390558722065">055 872 2065</a></div>
+  <section class="section">
+    <div class="container">
+      <p class="overline">Cosa facciamo</p>
+      <h2 class="section-title">La gestione completa, senza rimandare da nessuna parte</h2>
+      <p class="section-lead">Contabilità, tecnica, fiscale, assicurativo e legale sono tutti
+        dentro lo studio. Il condominio ha un solo interlocutore.</p>
+      <div class="grid grid--3" style="margin-top:48px"><a href="servizi.html#gestione-contabile" class="card card--link reveal">
+          <div class="card__icon"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"/></svg></div>
+          <h3>Gestione contabile</h3><p>Bilancio preventivo e consuntivo, riparto per tabelle millesimali, rate chiare e conto corrente intestato al condominio.</p>
+          <ul class="card__list"><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Estratto conto del singolo condòmino su richiesta</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Recupero delle morosità con il legale dello studio</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Pagamenti fornitori tracciati e rendicontati</span></li></ul><span class="card__more">Vedi il dettaglio <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></span>
+        </a><a href="servizi.html#assemblee" class="card card--link reveal">
+          <div class="card__icon"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/></svg></div>
+          <h3>Assemblee, anche online</h3><p>Convocazioni nei termini di legge, assemblee in presenza e in videoconferenza insieme, verbale trasmesso subito dopo.</p>
+          <ul class="card__list"><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Partecipazione e voto da telefono o computer</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Ordine del giorno preparato con il consiglio</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Deleghe e presenze registrate</span></li></ul><span class="card__more">Vedi il dettaglio <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></span>
+        </a><a href="servizi.html#manutenzioni" class="card card--link reveal">
+          <div class="card__icon"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"/></svg></div>
+          <h3>Manutenzioni e interventi</h3><p>Preventivi comparati prima di deliberare, interventi seguiti fino alla chiusura, un canale diretto per i guasti che non aspettano.</p>
+          <ul class="card__list"><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Verifiche periodiche di ascensori, caldaie e antincendio</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Lettura contatori e conguagli</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Reperibilità per le emergenze</span></li></ul><span class="card__more">Vedi il dettaglio <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></span>
+        </a><a href="servizi.html#pratiche" class="card card--link reveal">
+          <div class="card__icon"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z"/></svg></div>
+          <h3>Pratiche fiscali e legali</h3><p>Adempimenti fiscali del condominio, gestione delle polizze e dei sinistri, contenzioso seguito con il nostro avvocato di fiducia.</p>
+          <ul class="card__list"><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Modello 770, certificazioni uniche, F24</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Detrazioni per lavori sulle parti comuni</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Sinistri seguiti dall'apertura al rimborso</span></li></ul><span class="card__more">Vedi il dettaglio <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></span>
+        </a><a href="servizi.html#portale" class="card card--link reveal">
+          <div class="card__icon"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/></svg></div>
+          <h3>Portale MioCondominio</h3><p>Bilanci, verbali e situazione contabile consultabili in qualsiasi momento dal portale e dall'app, senza doverli chiedere.</p>
+          <ul class="card__list"><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Documenti disponibili 24 ore su 24</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Situazione delle rate sempre aggiornata</span></li><li><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><span>Accesso da computer e da telefono</span></li></ul><span class="card__more">Vedi il dettaglio <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></span>
+        </a></div>
+    </div>
+  </section>
+
+  <section class="section section--warm">
+    <div class="container">
+      <p class="overline">Perché sceglierci</p>
+      <h2 class="section-title">Tre cose che cambiano la vita a un condominio</h2>
+      <div class="grid grid--3" style="margin-top:48px">
+        <div class="card card--hover reveal"><div class="card__icon"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></div>
+          <h3>Sempre aperti, in tre sedi</h3>
+          <p>Le sedi ricevono al pubblico tutta la settimana e in orari diversi fra loro: la
+             mattina dal lunedì al venerdì, il pomeriggio dal lunedì al giovedì. Nessun
+             appuntamento da prendere.</p></div>
+        <div class="card card--hover reveal"><div class="card__icon"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z"/></svg></div>
+          <h3>Assemblee anche da casa</h3>
+          <p>In presenza e in videoconferenza insieme: chi lavora fuori, chi è anziano o chi ha
+             l'appartamento in affitto partecipa e vota dal telefono. Il quorum si raggiunge molto più spesso.</p></div>
+        <div class="card card--hover reveal"><div class="card__icon"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg></div>
+          <h3>Documenti quando servono</h3>
+          <p>Con MioCondominio bilanci, verbali e situazione contabile sono consultabili in
+             qualsiasi momento, senza chiederli e senza aspettare gli orari di sportello.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="overline">Le persone</p>
+      <h2 class="section-title">Chi trovate in studio</h2>
+      <p class="section-lead">Nessun call center e nessun ufficio in un'altra città: chi risponde
+        al telefono è la stessa persona che incontrate allo sportello.</p>
+      <div style="margin-top:48px"><div class="persone"><div class="persona reveal"><div class="persona__sigla" aria-hidden="true">GB</div><p class="persona__nome">Gianni Borgioli</p><p class="persona__ruolo">Amministratore, fondatore</p></div><div class="persona reveal"><div class="persona__sigla" aria-hidden="true">FB</div><p class="persona__nome">Federico Borgioli</p><p class="persona__ruolo">Amministratore</p></div><div class="persona reveal"><div class="persona__sigla" aria-hidden="true">C</div><p class="persona__nome">Claudia</p></div><div class="persona reveal"><div class="persona__sigla" aria-hidden="true">R</div><p class="persona__nome">Rossella</p></div><div class="persona reveal"><div class="persona__sigla" aria-hidden="true">E</div><p class="persona__nome">Eleonora</p></div><div class="persona reveal"><div class="persona__sigla" aria-hidden="true">FA</div><p class="persona__nome">Francesca A.</p></div><div class="persona reveal"><div class="persona__sigla" aria-hidden="true">FC</div><p class="persona__nome">Francesca C.</p></div><div class="persona reveal"><div class="persona__sigla" aria-hidden="true">CH</div><p class="persona__nome">Chiara</p></div></div></div>
+      <p style="margin-top:32px"><a class="btn btn--outline" href="chi-siamo.html">La storia dello studio</a></p>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <p class="overline">Dove siamo</p>
+      <h2 class="section-title">Tre sedi, una squadra sola</h2>
+      <p class="section-lead">Potete passare in qualsiasi sede: i fascicoli sono gli stessi e chi
+        vi riceve vede la vostra pratica da tutte e tre.</p>
+      <div style="margin-top:48px"><div class="grid grid--3"><div class="sede reveal">
+          <h3>Signa</h3>
+          <div class="sede__riga"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg><div>Via Roma 266<br>50058 Signa (FI)</div></div>
+          <div class="sede__riga"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><dl class="sede__orari"><div><dt>lun–ven</dt><dd>10:00–13:00</dd></div></dl></div>
+          <a class="sede__mappa" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Roma+266%2C+50058+Signa+FI" target="_blank" rel="noopener">Apri la mappa <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+        </div><div class="sede reveal">
+          <h3>Firenze — Isolotto</h3>
+          <div class="sede__riga"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg><div>Via Torcicoda 55/R<br>50143 Firenze</div></div>
+          <div class="sede__riga"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><dl class="sede__orari"><div><dt>lun–ven</dt><dd>10:00–13:00</dd></div><div><dt>mar e gio</dt><dd>15:30–18:00</dd></div></dl></div>
+          <a class="sede__mappa" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Torcicoda+55%2FR%2C+50143+Firenze" target="_blank" rel="noopener">Apri la mappa <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+        </div><div class="sede reveal">
+          <h3>Lastra a Signa</h3>
+          <div class="sede__riga"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/> <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg><div>Via Livornese 164<br>50055 Lastra a Signa (FI)</div></div>
+          <div class="sede__riga"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg><dl class="sede__orari"><div><dt>lun–gio</dt><dd>15:30–18:30</dd></div></dl></div>
+          <a class="sede__mappa" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Livornese+164%2C+50055+Lastra+a+Signa+FI" target="_blank" rel="noopener">Apri la mappa <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg></a>
+        </div></div></div>
+    </div>
+  </section>
+
+  <section class="section cta-band">
+    <div class="container">
+      <p class="overline">Cambiare amministratore</p>
+      <h2>Se il vostro condominio sta valutando un cambio, il passaggio lo facciamo noi</h2>
+      <p>Subentro, richiesta della documentazione al collega uscente, voltura delle utenze,
+         apertura del nuovo conto: sono passaggi che conosciamo a memoria. Al condominio
+         chiediamo solo la delibera.</p>
+      <div class="cta-band__actions">
+        <a class="btn btn--white" href="amministratore.html">Come funziona il subentro</a>
+        <a class="btn btn--ghost-light" href="contatti.html">Scrivici</a>
+      </div>
+    </div>
+  </section>
+  <div class="barra-mobile" aria-label="Contatti rapidi">
+    <a class="barra-mobile__voce" href="tel:+390558722065"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"/></svg><span>Chiama</span></a>
+    <a class="barra-mobile__voce barra-mobile__voce--wa" href="https://wa.me/393296039006"><svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg><span>WhatsApp</span></a>
+  </div>
+</main>
+<footer class="piede">
+  <div class="container">
+    <div class="piede__grid">
+      <div>
+        <p class="piede__logo">Studio Borgioli</p>
+        <span class="piede__filo" aria-hidden="true"></span>
+        <p class="piede__tagline">Il tuo condominio, la nostra priorità</p>
+        <p style="margin-top:16px;font-size:15px">Amministrazione condominiale a Signa,
+          Lastra a Signa e Firenze dal 1998.</p>
+      </div>
+      <div>
+        <p class="piede__et">Pagine</p>
+        <ul><li><a href="index.html">Home</a></li><li><a href="servizi.html">Servizi</a></li><li><a href="chi-siamo.html">Chi siamo</a></li><li><a href="domande.html">Domande frequenti</a></li><li><a href="amministratore.html">Cambiare amministratore</a></li><li><a href="contatti.html">Contatti</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+      </div>
+      <div>
+        <p class="piede__et">Contatti</p>
+        <ul>
+          <li><a href="tel:+390558722065">055 872 2065</a></li>
+          <li><a href="https://wa.me/393296039006">WhatsApp 329 603 9006</a></li>
+          <li><a href="mailto:studio@studioborgioli.com">studio@studioborgioli.com</a></li>
+          <li><a href="https://www.miocondominio.eu" target="_blank" rel="noopener">Area condomini — MioCondominio</a></li>
+        </ul>
+      </div>
+    </div>
+      <p class="piede__legale">
+        <strong>Studio Borgioli S.a.s. di Borgioli Gianni &amp; C.</strong> — sede legale
+        Via Roma 266, 50058 Signa (FI).
+        P.IVA e C.F. 06588060480 · REA FI 640382 · PEC studioborgiolisas@pec.it<br>
+        Iscritto A.N.A.I.P. — Associazione Nazionale Amministratori Immobiliari Professionisti.
+        Requisiti per l'esercizio dell'attività ai sensi dell'art. 71-bis disp. att. c.c.,
+        compresa la formazione periodica, consegnati insieme al preventivo.<br>
+        Questo sito non usa cookie, non profila e non carica risorse da server di terze parti.
+        <a href="privacy.html">Informativa privacy</a>.
+      </p>
   </div>
 </footer>
-
+<script src="script.js" defer></script>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "ProfessionalService",
+ "name": "Studio Borgioli S.a.s.",
+ "description": "Amministrazione condominiale a Signa, Lastra a Signa e Firenze dal 1998.",
+ "url": "https://www.studioborgioli.com/",
+ "email": "studio@studioborgioli.com",
+ "telephone": "+39-055-8722065",
+ "legalName": "Studio Borgioli S.a.s. di Borgioli Gianni & C.",
+ "foundingDate": "1998",
+ "slogan": "Il tuo condominio, la nostra priorità",
+ "vatID": "IT06588060480",
+ "taxID": "06588060480",
+ "identifier": {
+  "@type": "PropertyValue",
+  "name": "REA",
+  "value": "FI 640382"
+ },
+ "founder": {
+  "@type": "Person",
+  "name": "Gianni Borgioli",
+  "jobTitle": "Amministratore di condominio",
+  "memberOf": {
+   "@type": "Organization",
+   "name": "A.N.A.I.P. — Associazione Nazionale Amministratori Immobiliari Professionisti"
+  }
+ },
+ "knowsAbout": [
+  "amministrazione condominiale",
+  "assemblee di condominio",
+  "bilancio condominiale",
+  "tabelle millesimali",
+  "morosità condominiali",
+  "manutenzione parti comuni",
+  "sinistri e infiltrazioni",
+  "detrazioni fiscali sulle parti comuni"
+ ],
+ "areaServed": [
+  "Signa",
+  "Lastra a Signa",
+  "Firenze",
+  "Scandicci",
+  "Campi Bisenzio",
+  "Montelupo Fiorentino",
+  "Carmignano",
+  "Poggio a Caiano"
+ ],
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "Via Roma 266",
+  "postalCode": "50058",
+  "addressLocality": "Signa",
+  "addressRegion": "FI",
+  "addressCountry": "IT"
+ },
+ "sameAs": [
+  "https://www.miocondominio.eu",
+  "https://www.paginegialle.it/signa-fi/studio-borgioli-borgioli-gianni-c",
+  "https://www.paginebianche.it/scheda/signa/studio-borgioli-borgioli-gianni-c.13664962",
+  "https://aziende.virgilio.it/signa-fi/studio-borgioli-borgioli-gianni-c"
+ ],
+ "memberOf": {
+  "@type": "Organization",
+  "name": "A.N.A.I.P. — Associazione Nazionale Amministratori Immobiliari Professionisti"
+ },
+ "location": [
+  {
+   "@type": "Place",
+   "name": "Studio Borgioli — Signa",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Roma 266",
+    "postalCode": "50058",
+    "addressLocality": "Signa",
+    "addressRegion": "FI",
+    "addressCountry": "IT"
+   },
+   "openingHours": "Mo-Fr 10:00-13:00"
+  },
+  {
+   "@type": "Place",
+   "name": "Studio Borgioli — Firenze Isolotto",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Torcicoda 55/R",
+    "postalCode": "50143",
+    "addressLocality": "Firenze",
+    "addressRegion": "FI",
+    "addressCountry": "IT"
+   },
+   "openingHours": [
+    "Mo-Fr 10:00-13:00",
+    "Tu,Th 15:30-18:00"
+   ]
+  },
+  {
+   "@type": "Place",
+   "name": "Studio Borgioli — Lastra a Signa",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via Livornese 164",
+    "postalCode": "50055",
+    "addressLocality": "Lastra a Signa",
+    "addressRegion": "FI",
+    "addressCountry": "IT"
+   },
+   "openingHours": "Mo-Th 15:30-18:30"
+  }
+ ]
+}</script>
 </body>
 </html>
