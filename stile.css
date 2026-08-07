@@ -450,9 +450,19 @@ html.intro--bloccato, body.intro--bloccato { overflow: hidden; height: 100%; }
 .hero .container { position: relative; z-index: 1; }
 .hero__title {
   font-family: var(--font-display); font-weight: 700; font-size: var(--fs-hero);
-  color: var(--color-primary); line-height: 1.16; letter-spacing: -.012em;
-  max-width: 18ch;
+  color: var(--color-primary); line-height: 1.14; letter-spacing: -.014em;
+  max-width: 19ch;
+  text-wrap: balance;              /* righe di lunghezza simile, niente orfane */
 }
+/* il cuore della frase in corsivo: nel Palatino è il modo più elegante di dare
+   rilievo senza aggiungere colore, riquadri o sottolineature */
+.hero__title em { font-style: italic; font-weight: 700; }
+
+/* Quando la soglia si chiude portiamo il fuoco sul titolo, perché chi naviga da
+   tastiera o con un lettore di schermo riparta dal punto giusto. Il titolo però
+   non è un elemento con cui si interagisce: l'anello di messa a fuoco qui non
+   serve e sembrava un riquadro rosso attorno alla frase. */
+.hero__title:focus, .hero__title:focus-visible { outline: none; }
 .hero__sub {
   margin-top: var(--space-8); max-width: 58ch;
   font-size: clamp(17px, 1.6vw, 20px); color: var(--color-text-2);
