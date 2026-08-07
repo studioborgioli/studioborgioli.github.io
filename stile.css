@@ -507,13 +507,20 @@ html.intro--bloccato, body.intro--bloccato { overflow: hidden; height: 100%; }
 
 /* --------------------------------------------------------------- avviso -- */
 /* MODIFICA O CANCELLA questo blocco quando la chiusura è passata. */
-.avviso { background: #FDF4E7; border-bottom: 1px solid #EBD9BC; }
+/* Sta in cima a tutto, sopra la barra di navigazione: è la prima cosa che si
+   legge. Arancione, così non si confonde né col blu né col rosso di marca. */
+.avviso {
+  background: #FFF3E0;
+  border-bottom: 2px solid #E08A2E;
+}
 .avviso__row {
   display: flex; align-items: flex-start; gap: var(--space-3);
-  padding: var(--space-4) 0; font-size: 15px;
+  padding: var(--space-4) var(--gutter); font-size: 15px; color: #3A2A16;
 }
-.avviso__row svg { color: var(--color-accent-strong); margin-top: 2px; }
-.avviso b { color: var(--color-primary); }
+.avviso__row svg { color: #9A4E0F; margin-top: 3px; flex: none; }
+.avviso b { color: #8A4A12; }
+.avviso a { color: #8A4A12; font-weight: 700; }
+.avviso a:hover { color: #6E3A0D; }
 
 /* ----------------------------------------------------------------- card -- */
 .grid { display: grid; gap: var(--space-6); }
