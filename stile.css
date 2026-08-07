@@ -375,44 +375,40 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 
 /* ------------------------------------------------------------- ingresso -- */
-/* Si apre con il solo marchio. Il filetto rosso sotto il nome si carica
-   girando la rotella; arrivato in fondo la schermata si dissolve e il sito
-   resta libero. Chi non vuole aspettare ha il bottone, e chi ha le animazioni
-   ridotte non la vede proprio. */
+/* Soglia d'ingresso: il monogramma e basta. La barra sotto le lettere si
+   carica girando la rotella; a pieno carico la schermata si apre sul sito.
+   Solo su computer con mouse: sul telefono non compare mai. */
 .intro {
   position: fixed; inset: 0; z-index: 200;
   background: var(--color-surface);
   display: grid; place-items: center;
-  padding: var(--space-6);
-  transition: opacity .6s ease, visibility .6s;
+  transition: opacity .55s ease, visibility .55s;
 }
 .intro[hidden] { display: none; }
 .intro--via { opacity: 0; visibility: hidden; }
-.intro__dentro { width: min(520px, 100%); text-align: center; }
-.intro__marchio { width: 100%; height: auto; overflow: visible; }
-.intro__marchio .logo__s, .intro__marchio .logo__b, .intro__marchio .logo__nome {
-  font-family: var(--font-display); font-weight: 700; fill: var(--color-primary);
-}
-.intro__marchio .logo__s, .intro__marchio .logo__b { font-size: 54px; letter-spacing: 1px; }
-.intro__marchio .logo__nome { font-size: 30px; }
-.intro__marchio .logo__coda {
-  font-family: var(--font-display); font-size: 10px; letter-spacing: 1.8px;
-  fill: var(--color-primary);
-}
-.intro__marchio .logo__filo { fill: var(--color-accent); }
+.intro__dentro { text-align: center; }
+.intro__gruppo { display: inline-block; }
 
+.intro__sb {
+  display: block;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(88px, 13vw, 156px); line-height: .92;
+  letter-spacing: .04em; color: var(--color-primary);
+}
+
+/* la pista è larga esattamente quanto le due lettere sopra */
 .intro__pista {
-  margin: var(--space-8) auto 0; width: min(320px, 80%); height: 3px;
-  background: rgba(26,58,92,.14); border-radius: 2px; overflow: hidden;
+  margin-top: var(--space-4); width: 100%; height: 5px;
+  background: rgba(26,58,92,.12); border-radius: 3px; overflow: hidden;
 }
 .intro__riempi {
   display: block; width: 0; height: 100%;
-  background: var(--color-accent); border-radius: 2px;
-  transition: width .12s linear;
+  background: var(--color-accent); border-radius: 3px;
+  transition: width .1s linear;
 }
 .intro__nota {
-  margin-top: var(--space-4); font-size: 14px; color: var(--color-text-2);
-  letter-spacing: .04em;
+  margin-top: var(--space-8); font-size: 13px; color: var(--color-text-2);
+  letter-spacing: .16em; text-transform: uppercase;
 }
 .intro__salta {
   margin-top: var(--space-6); background: none; border: 0; cursor: pointer;
@@ -422,7 +418,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 html.intro--bloccato, body.intro--bloccato { overflow: hidden; height: 100%; }
 
-/* --------------------------------------------------------- barra mobile -- *//* --------------------------------------------------------- barra mobile -- */
+/* --------------------------------------------------------- barra mobile -- *//* --------------------------------------------------------- barra mobile -- *//* --------------------------------------------------------- barra mobile -- */
 /* Dai dati del report: il 38% dei clic da telefono avviene entro 30 secondi,
    e sono quasi tutti sul telefono o su WhatsApp. Qui restano sempre visibili. */
 .barra-mobile { display: none; }

@@ -35,9 +35,13 @@
     document.body.classList.add('disegna');
   }
 
+  /* Solo computer con mouse: niente soglia su telefoni e tavolette, dove
+     il gesto dello scorrimento è quello con cui si legge il sito. */
+  var daComputer = window.matchMedia('(pointer: fine)').matches && window.innerWidth >= 900;
+
   if (!intro) {
     avviaDisegno();
-  } else if (ridotto) {
+  } else if (ridotto || !daComputer) {
     intro.parentNode.removeChild(intro);
     avviaDisegno();
   } else {
@@ -57,7 +61,7 @@
       var pc = Math.round(carica * 100);
       riempi.style.width = pc + '%';
       pista.setAttribute('aria-valuenow', String(pc));
-      if (pc > 55 && nota) nota.textContent = 'Ancora un poco…';
+      if (pc > 55 && nota) nota.textContent = 'Ancora un poco';
       if (carica >= 1) entra();
     }
 
@@ -87,17 +91,6 @@
       ev.preventDefault();
       spingi(Math.abs(ev.deltaY) || 40);
     }, { passive: false });
-
-    var ultimoTocco = null;
-    window.addEventListener('touchstart', function (ev) {
-      ultimoTocco = ev.touches[0].clientY;
-    }, { passive: true });
-    window.addEventListener('touchmove', function (ev) {
-      if (chiusa || ultimoTocco === null) return;
-      var y = ev.touches[0].clientY;
-      spingi(Math.abs(ultimoTocco - y) * 2.2);
-      ultimoTocco = y;
-    }, { passive: true });
 
     window.addEventListener('keydown', function (ev) {
       if (chiusa) return;
