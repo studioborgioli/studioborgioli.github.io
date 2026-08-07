@@ -144,48 +144,70 @@
     return el ? el.value.trim() : '';
   }
 
-  function preparaMailto(modulo) {
-    var tipo = valore(modulo, 'tipo') || 'Richiesta dal sito';
+  function componiTesto(modulo) {
     var cond = valore(modulo, 'condominio');
-    /* il prefisso rende le richieste dal sito riconoscibili dallo smistamento */
-    var oggetto = '[Sito] ' + tipo + (cond ? ' \u2014 ' + cond : '');
-
-    var corpo = [
-      'Buongiorno,',
-      '',
+    return [
       valore(modulo, 'messaggio'),
       '',
-      '---',
       'Nome e cognome: ' + valore(modulo, 'nome'),
       'Telefono: ' + valore(modulo, 'telefono'),
       'Email: ' + (valore(modulo, 'email') || '(non indicata)'),
       'Condominio: ' + (cond || '(non indicato)'),
-      'Tipo di richiesta: ' + tipo,
-      '',
-      'Inviato dal sito studioborgioli.com'
+      'Tipo di richiesta: ' + (valore(modulo, 'tipo') || 'Richiesta dal sito')
     ].join('\n');
-
-    return 'mailto:' + DESTINATARIO +
-      '?subject=' + encodeURIComponent(oggetto) +
-      '&body=' + encodeURIComponent(corpo);
   }
 
-  function mostraEsito(modulo, link) {
+  /* Tre strade vere invece di una sola: WhatsApp, Gmail e il programma di posta.
+     Prima il modulo apriva soltanto mailto: e su chi non ha un client di posta
+     configurato non succedeva nulla. */
+  function mostraEsito(modulo) {
+    var testo = componiTesto(modulo);
+    var cond = valore(modulo, 'condominio');
+    var oggetto = '[Sito] ' + (valore(modulo, 'tipo') || 'Richiesta') + (cond ? ' \u2014 ' + cond : '');
+
+    var wa = 'https://wa.me/393296039006?text=' + encodeURIComponent(testo);
+    var gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + DESTINATARIO +
+                '&su=' + encodeURIComponent(oggetto) + '&body=' + encodeURIComponent(testo);
+    var mail = 'mailto:' + DESTINATARIO + '?subject=' + encodeURIComponent(oggetto) +
+               '&body=' + encodeURIComponent(testo);
+
     var esito = document.createElement('div');
-    esito.className = 'form__esito';
+    esito.className = 'esito';
     esito.setAttribute('role', 'status');
     esito.innerHTML =
-      '<svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" fill="none" ' +
-      'stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" ' +
-      'stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>' +
-      '<div><strong>Il messaggio \u00e8 pronto.</strong><br>' +
-      'Si sta aprendo il vostro programma di posta con l\u2019email gi\u00e0 scritta: ' +
-      'rileggetela e premete invia. Se non si apre nulla, ' +
-      '<a href="' + link.replace(/"/g, '&quot;') + '">aprite l\u2019email da qui</a> ' +
-      'oppure scriveteci direttamente a <a href="mailto:' + DESTINATARIO + '">' +
-      DESTINATARIO + '</a>.</div>';
+      '<h3>La richiesta \u00e8 pronta. Scegliete come inviarcela.</h3>' +
+      '<p class="esito__nota">Nessun dato \u00e8 stato trasmesso a questo sito: il messaggio ' +
+      'parte da voi, con lo strumento che preferite.</p>' +
+      '<div class="esito__vie">' +
+        '<a class="btn btn--primary" target="_blank" rel="noopener" href="' + wa + '">Invia su WhatsApp</a>' +
+        '<a class="btn btn--outline" target="_blank" rel="noopener" href="' + gmail + '">Invia con Gmail</a>' +
+        '<a class="btn btn--outline" href="' + mail + '">Programma di posta</a>' +
+      '</div>' +
+      '<details class="esito__testo"><summary>Oppure copiate il testo e mandatecelo come volete</summary>' +
+        '<textarea readonly rows="10"></textarea>' +
+        '<button type="button" class="btn btn--outline esito__copia">Copia il messaggio</button>' +
+        '<p class="esito__nota">studio@studioborgioli.com \u00b7 055 872 2065</p>' +
+      '</details>';
+
     modulo.parentNode.insertBefore(esito, modulo.nextSibling);
+    esito.querySelector('textarea').value = 'A: ' + DESTINATARIO + '\nOggetto: ' + oggetto + '\n\n' + testo;
+
+    esito.querySelector('.esito__copia').addEventListener('click', function () {
+      var area = esito.querySelector('textarea');
+      area.select();
+      var fatto = false;
+      try { fatto = document.execCommand('copy'); } catch (e) { fatto = false; }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(area.value).then(function () {
+          this.textContent = 'Copiato';
+        }.bind(this)).catch(function () {});
+      }
+      this.textContent = fatto ? 'Copiato' : 'Selezionato: premete Ctrl+C';
+    });
+
     esito.scrollIntoView({ behavior: ridotto ? 'auto' : 'smooth', block: 'center' });
+    esito.querySelector('h3').setAttribute('tabindex', '-1');
+    esito.querySelector('h3').focus();
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('form.form'), function (modulo) {
@@ -207,11 +229,9 @@
         return;
       }
 
-      var link = preparaMailto(modulo);
       var bottone = modulo.querySelector('button[type="submit"]');
-      if (bottone) { bottone.disabled = true; bottone.textContent = 'Email preparata'; }
-      mostraEsito(modulo, link);
-      window.location.href = link;
+      if (bottone) { bottone.disabled = true; bottone.textContent = 'Richiesta pronta'; }
+      mostraEsito(modulo);
     });
 
     /* pulizia dell'errore mentre si scrive */

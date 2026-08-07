@@ -545,12 +545,27 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .campo__errore { font-size: 13px; color: var(--color-error-text); min-height: 0; }
 .campo--ko input, .campo--ko select, .campo--ko textarea { border-color: var(--color-error-text); }
 .form__nota { font-size: var(--fs-caption); color: var(--color-text-2); }
-.form__esito {
-  display: flex; gap: var(--space-3); align-items: flex-start;
+/* pannello che compare dopo l'invio: tre strade vere, non un vicolo cieco */
+.esito {
+  margin-top: var(--space-8); padding: var(--space-8);
   background: #EAF7EF; border: 1px solid #B7E0C6; border-radius: var(--radius);
-  padding: var(--space-6); color: #1E5233;
 }
-.form__esito svg { color: var(--color-success); margin-top: 2px; }
+.esito h3 {
+  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-h3);
+  color: #1E5233; outline: none;
+}
+.esito__nota { margin-top: var(--space-3); font-size: 15px; color: #2F6B48; }
+.esito__vie { margin-top: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.esito__testo { margin-top: var(--space-6); }
+.esito__testo summary {
+  cursor: pointer; font-weight: 700; color: #1E5233; font-size: 15px;
+}
+.esito__testo textarea {
+  width: 100%; margin-top: var(--space-4); border: 1.5px solid #B7E0C6;
+  border-radius: var(--radius-sm); padding: var(--space-4); font-size: 15px;
+  background: #fff; resize: vertical;
+}
+.esito__copia { margin-top: var(--space-3); }
 .honey { position: absolute; left: -9999px; }
 
 /* ------------------------------------------------------------- richiamo -- */
@@ -619,8 +634,9 @@ blockquote cite {
 /* ---------------------------------------------------------------- piede -- */
 .piede { background: var(--color-primary-dark); color: #C3D4E3; padding: var(--space-16) 0 var(--space-8); }
 .piede a { color: #E4EDF5; }
-.piede__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: var(--space-12); }
-@media (max-width: 899px) { .piede__grid { grid-template-columns: 1fr; gap: var(--space-8); } }
+.piede__grid { display: grid; grid-template-columns: 1.3fr .8fr 1fr 1.2fr; gap: var(--space-8); }
+@media (max-width: 1099px) { .piede__grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 699px) { .piede__grid { grid-template-columns: 1fr; gap: var(--space-8); } }
 
 .piede__tagline {
   font-family: var(--font-display); font-style: italic; font-size: 16px;
@@ -631,6 +647,9 @@ blockquote cite {
   text-transform: uppercase; color: #90AAC2; margin-bottom: var(--space-3);
 }
 .piede li { margin-top: var(--space-2); font-size: 15px; }
+.piede__min { font-size: 13px; color: #90AAC2; margin-top: var(--space-2); }
+.piede__orari li { margin-top: var(--space-4); line-height: 1.5; font-variant-numeric: tabular-nums; }
+.piede__orari b { color: #E4EDF5; }
 .piede__legale {
   margin-top: var(--space-12); padding-top: var(--space-6);
   border-top: 1px solid #274764; font-size: var(--fs-caption);
