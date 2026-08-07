@@ -648,3 +648,14 @@ blockquote cite {
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .5s ease-out, transform .5s ease-out; }
 .reveal.visibile { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+
+
+/* ------------------------------------------- transizioni fra le pagine -- */
+/* Chi ha un browser recente vede le pagine sfumare l'una nell'altra invece
+   del lampo bianco; per tutti gli altri non cambia nulla. */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

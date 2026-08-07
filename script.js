@@ -66,6 +66,40 @@
     }
   }
 
+
+  /* ------------------------------------------- ricerca fra le domande
+     Filtra le domande mentre si scrive; con la casella vuota torna tutto. */
+  var cerca = document.getElementById('cerca-domande');
+  if (cerca) {
+    var voci = Array.prototype.slice.call(document.querySelectorAll('.faq details'));
+    var titoli = Array.prototype.slice.call(document.querySelectorAll('.section-title'))
+      .filter(function (t) { return t.nextElementSibling && t.nextElementSibling.classList &&
+                                    t.nextElementSibling.classList.contains('faq'); });
+    var esito = document.getElementById('esito-ricerca');
+    cerca.addEventListener('input', function () {
+      var q = cerca.value.trim().toLowerCase();
+      var trovate = 0;
+      voci.forEach(function (v) {
+        var testo = v.textContent.toLowerCase();
+        var visibile = !q || testo.indexOf(q) !== -1;
+        v.style.display = visibile ? '' : 'none';
+        if (visibile) { trovate++; if (q) v.open = true; else v.open = false; }
+      });
+      titoli.forEach(function (t) {
+        var faq = t.nextElementSibling;
+        var almeno = Array.prototype.some.call(faq.querySelectorAll('details'), function (v) {
+          return v.style.display !== 'none';
+        });
+        t.style.display = almeno ? '' : 'none';
+      });
+      if (esito) {
+        esito.textContent = !q ? '' :
+          (trovate ? trovate + (trovate === 1 ? ' domanda trovata' : ' domande trovate')
+                   : 'Nessuna domanda trovata: provate con una parola diversa, o scriveteci.');
+      }
+    });
+  }
+
   /* ------------------------------------------------------ modulo di contatto
      Il modulo non invia nulla a un server: compone un'email già scritta e apre
      il programma di posta dell'utente. Così il sito resta statico, senza
