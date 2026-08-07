@@ -30,6 +30,24 @@
 </head>
 <body>
 <a class="salta" href="#principale">Vai al contenuto</a>
+<div class="intro" id="intro" hidden>
+  <div class="intro__dentro">
+    <svg class="intro__marchio" viewBox="0 0 375 100" role="img" aria-label="Studio Borgioli, amministrazioni condominiali">
+      <text class="logo__s" x="24" y="63.6">S</text>
+      <text class="logo__b" x="57" y="63.6">B</text>
+      <rect class="logo__filo" x="24" y="70.6" width="67" height="3.1"/>
+      <text class="logo__nome" x="122" y="51.4">Studio Borgioli</text>
+      <text class="logo__coda" x="122.5" y="69.4">AMMINISTRAZIONI CONDOMINIALI</text>
+    </svg>
+    <div class="intro__pista" role="progressbar" aria-label="Avanzamento ingresso"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="introPista">
+      <span class="intro__riempi" id="introRiempi"></span>
+    </div>
+    <p class="intro__nota" id="introNota">Girate la rotella per entrare</p>
+    <button type="button" class="intro__salta" id="introSalta">Entra subito</button>
+  </div>
+</div>
+
 <header class="navbar">
   <div class="container navbar__row">
     <a class="logo" href="index.html" aria-label="Studio Borgioli, amministrazioni condominiali — torna alla home">
@@ -50,26 +68,40 @@
 </header>
 <main id="principale">
   <section class="hero">
-    <div class="scena" aria-hidden="true" data-scena>
-      <svg viewBox="0 0 520 360" preserveAspectRatio="xMaxYMax slice">
-        <g class="scena__strato" data-prof="0.6">
-          <rect x="18" y="150" width="128" height="210" rx="3"/>
-          <rect x="40" y="176" width="26" height="34" rx="2"/><rect x="76" y="176" width="26" height="34" rx="2"/>
-          <rect x="40" y="228" width="26" height="34" rx="2"/><rect x="76" y="228" width="26" height="34" rx="2"/>
-          <rect x="40" y="280" width="26" height="34" rx="2"/><rect x="76" y="280" width="26" height="34" rx="2"/>
-        </g>
-        <g class="scena__strato" data-prof="1.1">
-          <rect x="168" y="96" width="150" height="264" rx="3"/>
-          <rect x="192" y="126" width="28" height="36" rx="2"/><rect x="232" y="126" width="28" height="36" rx="2"/><rect x="272" y="126" width="28" height="36" rx="2"/>
-          <rect x="192" y="182" width="28" height="36" rx="2"/><rect x="232" y="182" width="28" height="36" rx="2" class="scena__accesa"/><rect x="272" y="182" width="28" height="36" rx="2"/>
-          <rect x="192" y="238" width="28" height="36" rx="2"/><rect x="232" y="238" width="28" height="36" rx="2"/><rect x="272" y="238" width="28" height="36" rx="2"/>
-          <rect x="216" y="300" width="56" height="60" rx="3" class="scena__portone"/>
-        </g>
-        <g class="scena__strato" data-prof="1.7">
-          <rect x="340" y="138" width="120" height="222" rx="3"/>
-          <rect x="362" y="166" width="26" height="34" rx="2"/><rect x="400" y="166" width="26" height="34" rx="2"/>
-          <rect x="362" y="218" width="26" height="34" rx="2"/><rect x="400" y="218" width="26" height="34" rx="2"/>
-          <rect x="362" y="270" width="26" height="34" rx="2"/><rect x="400" y="270" width="26" height="34" rx="2"/>
+    <div class="villa" aria-hidden="true" data-villa>
+      <svg viewBox="0 0 720 440" preserveAspectRatio="xMidYMax meet">
+        <g class="villa__tratto">
+          <!-- cipressi -->
+          <path class="villa__cipresso" style="--r:1" d="M78 392 C 62 330 66 250 78 196 C 90 250 94 330 78 392 Z" pathLength="1"/>
+          <path class="villa__cipresso" style="--r:-1" d="M646 392 C 631 336 634 262 646 212 C 658 262 661 336 646 392 Z" pathLength="1"/>
+          <!-- corpo centrale -->
+          <path d="M212 392 L212 182 L508 182 L508 392" pathLength="1"/>
+          <path d="M190 184 L360 104 L530 184 Z" pathLength="1"/>
+          <path d="M212 268 L508 268" pathLength="1"/>
+          <!-- belvedere -->
+          <path d="M330 104 L330 62 L390 62 L390 104" pathLength="1"/>
+          <path d="M320 62 L360 36 L400 62 Z" pathLength="1"/>
+          <path d="M344 70 L344 96 M360 66 L360 96 M376 70 L376 96" pathLength="1"/>
+          <!-- ali laterali -->
+          <path d="M124 392 L124 252 L212 252" pathLength="1"/>
+          <path d="M112 254 L168 216 L224 254" pathLength="1"/>
+          <path d="M596 392 L596 252 L508 252" pathLength="1"/>
+          <path d="M496 254 L552 216 L608 254" pathLength="1"/>
+          <!-- finestre, piano nobile -->
+          <path d="M244 208 h40 v46 h-40 Z M304 208 h40 v46 h-40 Z M376 208 h40 v46 h-40 Z M436 208 h40 v46 h-40 Z" pathLength="1"/>
+          <path d="M264 208 v46 M324 208 v46 M396 208 v46 M456 208 v46" pathLength="1"/>
+          <!-- finestre, piano terra -->
+          <path d="M244 292 h40 v52 h-40 Z M436 292 h40 v52 h-40 Z" pathLength="1"/>
+          <!-- portale -->
+          <path d="M330 392 L330 322 C 330 300 390 300 390 322 L390 392" pathLength="1"/>
+          <path d="M360 306 L360 392" pathLength="1"/>
+          <path d="M316 392 h88 M306 400 h108" pathLength="1"/>
+          <!-- finestre delle ali -->
+          <path d="M150 288 h34 v42 h-34 Z M536 288 h34 v42 h-34 Z" pathLength="1"/>
+          <!-- muro e terreno -->
+          <path d="M26 400 L694 400" pathLength="1"/>
+          <path d="M26 400 L26 372 M694 400 L694 372" pathLength="1"/>
+          <path d="M54 386 h56 M614 386 h56" pathLength="1"/>
         </g>
       </svg>
     </div>
@@ -87,6 +119,15 @@
       <p class="hero__note">Rispondiamo entro due giorni lavorativi. WhatsApp solo messaggi di testo.</p>
     </div>
   </section>
+  <div class="sportelli"><div class="container sportelli__row">
+  <p class="sportelli__et">Sportelli aperti</p>
+  <ul class="sportelli__lista">
+    <li><b>Signa</b><span>lun–ven 10:00–13:00</span></li>
+    <li><b>Firenze Isolotto</b><span>lun–ven 10:00–13:00 · mar e gio 15:30–18:00</span></li>
+    <li><b>Lastra a Signa</b><span>lun–gio 15:30–18:30</span></li>
+  </ul>
+  <p class="sportelli__nota">senza appuntamento</p>
+</div></div>
   <div class="proof"><div class="container proof__row">
   <div class="proof__item"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg><div><b>A.N.A.I.P.</b><br><span>iscritti dal 1998, con la presidenza provinciale</span></div></div>
   <div class="proof__item"><svg class="icona" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/></svg><div><b>Dal 1998</b><br><span>gestione familiare, seconda generazione</span></div></div>
@@ -97,7 +138,8 @@
     <div class="container avviso__row">
       <svg class="icona icona--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></svg>
       <p><b>Chiusura estiva:</b> lo studio è chiuso dal 10 al 21 agosto e riapre lunedì 24.
-      Per le emergenze scrivete a <a href="mailto:studio@studioborgioli.com?subject=URGENTE%20%E2%80%94%20%5Bnome%20del%20condominio%5D">studio@studioborgioli.com</a>
+      Per le <b>emergenze</b> chiamate Gianni Borgioli al <a href="tel:+393381882133"><b>338 188 2133</b></a>,
+      oppure scrivete a <a href="mailto:studio@studioborgioli.com?subject=URGENTE%20%E2%80%94%20%5Bnome%20del%20condominio%5D">studio@studioborgioli.com</a>
       indicando il nome del condominio nell'oggetto.</p>
     </div>
   </div>

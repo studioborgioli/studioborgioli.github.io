@@ -24,48 +24,93 @@
   }
 
 
-  /* ------------------------------------------------- facciata che si muove
-     Con il mouse: gli strati seguono il puntatore, ognuno di quanto gli spetta.
-     Senza mouse (telefono, tablet): seguono lo scorrimento della pagina.
-     Con le animazioni ridotte attive: non si muove niente. */
-  var scena = document.querySelector('[data-scena]');
-  if (scena && !ridotto) {
-    var strati = scena.querySelectorAll('.scena__strato');
-    var puntatore = window.matchMedia('(pointer: fine)').matches;
+  /* ----------------------------------------------------- schermata d'ingresso
+     Si apre con il solo marchio. Il filetto sotto il nome si carica girando la
+     rotella (o scorrendo, sul telefono); a pieno carico la schermata si
+     dissolve e il sito resta libero. Si può saltare col bottone, con Invio,
+     con Esc o con un clic: nessuno resta chiuso fuori. */
+  var intro = document.getElementById('intro');
 
-    if (puntatore) {
-      var attesa = false;
-      window.addEventListener('mousemove', function (ev) {
-        if (attesa) return;
-        attesa = true;
-        window.requestAnimationFrame(function () {
-          var dx = (ev.clientX / window.innerWidth - 0.5) * 2;
-          var dy = (ev.clientY / window.innerHeight - 0.5) * 2;
-          Array.prototype.forEach.call(strati, function (st) {
-            var p = parseFloat(st.getAttribute('data-prof')) || 1;
-            st.style.transform = 'translate(' + (-dx * 9 * p).toFixed(2) + 'px,' +
-                                 (-dy * 5 * p).toFixed(2) + 'px)';
-          });
-          attesa = false;
-        });
-      }, { passive: true });
-    } else {
-      var atteso = false;
-      window.addEventListener('scroll', function () {
-        if (atteso) return;
-        atteso = true;
-        window.requestAnimationFrame(function () {
-          var y = Math.min(window.scrollY, 600) / 600;
-          Array.prototype.forEach.call(strati, function (st) {
-            var p = parseFloat(st.getAttribute('data-prof')) || 1;
-            st.style.transform = 'translateY(' + (-y * 26 * p).toFixed(2) + 'px)';
-          });
-          atteso = false;
-        });
-      }, { passive: true });
-    }
+  function avviaDisegno() {
+    document.body.classList.add('disegna');
   }
 
+  if (!intro) {
+    avviaDisegno();
+  } else if (ridotto) {
+    intro.parentNode.removeChild(intro);
+    avviaDisegno();
+  } else {
+    var riempi = document.getElementById('introRiempi');
+    var pista = document.getElementById('introPista');
+    var nota = document.getElementById('introNota');
+    var salta = document.getElementById('introSalta');
+    var carica = 0;              /* da 0 a 1 */
+    var SOGLIA = 900;            /* quanto scorrimento serve per entrare */
+    var chiusa = false;
+
+    intro.hidden = false;
+    document.documentElement.classList.add('intro--bloccato');
+    document.body.classList.add('intro--bloccato');
+
+    function aggiorna() {
+      var pc = Math.round(carica * 100);
+      riempi.style.width = pc + '%';
+      pista.setAttribute('aria-valuenow', String(pc));
+      if (pc > 55 && nota) nota.textContent = 'Ancora un poco…';
+      if (carica >= 1) entra();
+    }
+
+    function spingi(quanto) {
+      if (chiusa) return;
+      carica = Math.min(1, Math.max(0, carica + quanto / SOGLIA));
+      aggiorna();
+    }
+
+    function entra() {
+      if (chiusa) return;
+      chiusa = true;
+      riempi.style.width = '100%';
+      intro.classList.add('intro--via');
+      document.documentElement.classList.remove('intro--bloccato');
+      document.body.classList.remove('intro--bloccato');
+      avviaDisegno();
+      window.setTimeout(function () {
+        if (intro.parentNode) intro.parentNode.removeChild(intro);
+        var titolo = document.querySelector('.hero__title');
+        if (titolo) { titolo.setAttribute('tabindex', '-1'); titolo.focus({ preventScroll: true }); }
+      }, 700);
+    }
+
+    window.addEventListener('wheel', function (ev) {
+      if (chiusa) return;
+      ev.preventDefault();
+      spingi(Math.abs(ev.deltaY) || 40);
+    }, { passive: false });
+
+    var ultimoTocco = null;
+    window.addEventListener('touchstart', function (ev) {
+      ultimoTocco = ev.touches[0].clientY;
+    }, { passive: true });
+    window.addEventListener('touchmove', function (ev) {
+      if (chiusa || ultimoTocco === null) return;
+      var y = ev.touches[0].clientY;
+      spingi(Math.abs(ultimoTocco - y) * 2.2);
+      ultimoTocco = y;
+    }, { passive: true });
+
+    window.addEventListener('keydown', function (ev) {
+      if (chiusa) return;
+      if (ev.key === 'Escape' || ev.key === 'Enter' || ev.key === ' ') { entra(); return; }
+      if (ev.key === 'ArrowDown' || ev.key === 'PageDown') { ev.preventDefault(); spingi(160); }
+    });
+
+    salta.addEventListener('click', entra);
+    intro.addEventListener('click', function (ev) { if (ev.target === intro) entra(); });
+
+    /* rete di sicurezza: dopo dodici secondi si entra comunque */
+    window.setTimeout(entra, 12000);
+  }
 
   /* ------------------------------------------- ricerca fra le domande
      Filtra le domande mentre si scrive; con la casella vuota torna tutto. */

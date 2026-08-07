@@ -325,28 +325,104 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn--white:hover { background: var(--color-bg-warm); }
 .btn[disabled] { opacity: .55; cursor: not-allowed; transform: none; }
 
-/* ---------------------------------------------------------------- scena -- */
-/* Facciata disegnata dietro il titolo: tre piani su tre profondità diverse.
-   Con il mouse gli strati si spostano di poco, uno più dell'altro; sul telefono
-   il movimento è legato allo scorrimento, così l'effetto lo vede anche chi non
-   ha un mouse — cioè due terzi di chi ci visita. */
-.scena {
-  position: absolute; right: 0; bottom: 0; top: 0;
-  width: min(52%, 620px); pointer-events: none; overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%);
-  mask-image: linear-gradient(to right, transparent 0, #000 22%);
+/* ---------------------------------------------------------------- villa -- */
+/* Disegno a tratto di una villa: si compone da solo, come una penna che passa
+   sul foglio. Niente movimento laterale, niente inseguimento del mouse: il
+   movimento è quello del disegno che nasce, più il respiro lento dei cipressi. */
+.villa {
+  position: absolute; right: 0; bottom: 0;
+  width: min(56%, 700px); height: 86%;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%);
+  mask-image: linear-gradient(to right, transparent 0, #000 18%);
 }
-.scena svg { width: 100%; height: 100%; display: block; }
-.scena__strato rect { fill: var(--color-primary); opacity: .07; }
-.scena__strato:nth-child(2) rect { opacity: .1; }
-.scena__strato:nth-child(3) rect { opacity: .055; }
-.scena__strato { transition: transform .35s cubic-bezier(.22,1,.36,1); will-change: transform; }
-.scena__accesa { fill: var(--color-accent) !important; opacity: .5 !important; }
-.scena__portone { fill: var(--color-primary) !important; opacity: .16 !important; }
-@media (max-width: 767px) { .scena { width: 100%; opacity: .55; } }
-@media (prefers-reduced-motion: reduce) { .scena__strato { transition: none; transform: none !important; } }
+.villa svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.villa__tratto path {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .34;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+/* il tratto si disegna quando la pagina è pronta */
+.disegna .villa__tratto path {
+  animation: traccia 2.6s cubic-bezier(.55,.15,.35,1) forwards;
+}
+.villa__tratto path:nth-child(1), .villa__tratto path:nth-child(2) { animation-delay: 0s; }
+.villa__tratto path:nth-child(3) { animation-delay: .25s; }
+.villa__tratto path:nth-child(4) { animation-delay: .45s; }
+.villa__tratto path:nth-child(n+5) { animation-delay: .7s; }
+.villa__tratto path:nth-child(n+9) { animation-delay: .95s; }
+.villa__tratto path:nth-child(n+14) { animation-delay: 1.2s; }
+@keyframes traccia { to { stroke-dashoffset: 0; } }
 
-/* --------------------------------------------------------- barra mobile -- */
+/* i due cipressi respirano, appena appena */
+.disegna .villa__cipresso {
+  transform-box: fill-box; transform-origin: 50% 100%;
+  animation: traccia 2.6s cubic-bezier(.55,.15,.35,1) forwards,
+             respiro 9s ease-in-out 2.8s infinite;
+}
+@keyframes respiro {
+  0%, 100% { transform: rotate(calc(var(--r) * 0.7deg)); }
+  50%      { transform: rotate(calc(var(--r) * -0.7deg)); }
+}
+@media (max-width: 767px) { .villa { width: 100%; height: 62%; opacity: .7; } }
+@media (prefers-reduced-motion: reduce) {
+  .villa__tratto path { stroke-dashoffset: 0; animation: none !important; }
+}
+
+/* ------------------------------------------------------------- ingresso -- */
+/* Si apre con il solo marchio. Il filetto rosso sotto il nome si carica
+   girando la rotella; arrivato in fondo la schermata si dissolve e il sito
+   resta libero. Chi non vuole aspettare ha il bottone, e chi ha le animazioni
+   ridotte non la vede proprio. */
+.intro {
+  position: fixed; inset: 0; z-index: 200;
+  background: var(--color-surface);
+  display: grid; place-items: center;
+  padding: var(--space-6);
+  transition: opacity .6s ease, visibility .6s;
+}
+.intro[hidden] { display: none; }
+.intro--via { opacity: 0; visibility: hidden; }
+.intro__dentro { width: min(520px, 100%); text-align: center; }
+.intro__marchio { width: 100%; height: auto; overflow: visible; }
+.intro__marchio .logo__s, .intro__marchio .logo__b, .intro__marchio .logo__nome {
+  font-family: var(--font-display); font-weight: 700; fill: var(--color-primary);
+}
+.intro__marchio .logo__s, .intro__marchio .logo__b { font-size: 54px; letter-spacing: 1px; }
+.intro__marchio .logo__nome { font-size: 30px; }
+.intro__marchio .logo__coda {
+  font-family: var(--font-display); font-size: 10px; letter-spacing: 1.8px;
+  fill: var(--color-primary);
+}
+.intro__marchio .logo__filo { fill: var(--color-accent); }
+
+.intro__pista {
+  margin: var(--space-8) auto 0; width: min(320px, 80%); height: 3px;
+  background: rgba(26,58,92,.14); border-radius: 2px; overflow: hidden;
+}
+.intro__riempi {
+  display: block; width: 0; height: 100%;
+  background: var(--color-accent); border-radius: 2px;
+  transition: width .12s linear;
+}
+.intro__nota {
+  margin-top: var(--space-4); font-size: 14px; color: var(--color-text-2);
+  letter-spacing: .04em;
+}
+.intro__salta {
+  margin-top: var(--space-6); background: none; border: 0; cursor: pointer;
+  font-family: var(--font-display); font-size: 14px; font-weight: 700;
+  color: var(--color-secondary); text-decoration: underline;
+  text-underline-offset: 4px; padding: var(--space-2) var(--space-3);
+}
+html.intro--bloccato, body.intro--bloccato { overflow: hidden; height: 100%; }
+
+/* --------------------------------------------------------- barra mobile -- *//* --------------------------------------------------------- barra mobile -- */
 /* Dai dati del report: il 38% dei clic da telefono avviene entro 30 secondi,
    e sono quasi tutti sul telefono o su WhatsApp. Qui restano sempre visibili. */
 .barra-mobile { display: none; }
@@ -400,6 +476,28 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .proof__item { display: flex; align-items: center; gap: var(--space-3); }
 .proof__item b { font-family: var(--font-display); font-weight: 700; font-size: 24px; }
 .proof__item span { font-size: 14px; color: #CFE0EE; }
+
+/* ----------------------------------------------------------- sportelli -- */
+/* Gli orari delle tre sedi, subito sotto l'apertura: non devono essere una
+   cosa da cercare. */
+.sportelli { background: var(--color-bg-warm); border-bottom: 1px solid var(--color-line); }
+.sportelli__row {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-3) var(--space-8);
+  padding: var(--space-4) var(--gutter);
+}
+.sportelli__et {
+  font-size: var(--fs-overline); font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--color-accent-strong);
+}
+.sportelli__lista { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-8); }
+.sportelli__lista li { display: flex; gap: var(--space-2); align-items: baseline; font-size: 15px; }
+.sportelli__lista b { color: var(--color-primary); }
+.sportelli__lista span { color: var(--color-text-2); font-variant-numeric: tabular-nums; }
+.sportelli__nota { font-size: 13px; color: var(--color-text-2); font-style: italic; }
+@media (max-width: 767px) {
+  .sportelli__row { flex-direction: column; gap: var(--space-2); }
+  .sportelli__lista { flex-direction: column; gap: var(--space-1); }
+}
 
 /* --------------------------------------------------------------- avviso -- */
 /* MODIFICA O CANCELLA questo blocco quando la chiusura è passata. */
