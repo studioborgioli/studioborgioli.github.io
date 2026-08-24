@@ -145,6 +145,13 @@
 
   var DESTINATARIO = 'studio@studioborgioli.com';
 
+  /* Dove finiscono davvero le richieste del modulo: un'applicazione web di
+     Google Apps Script sull'account dello studio, che le scrive su un foglio e
+     manda l'avviso a studio@. Se questo indirizzo è vuoto, o se l'invio non
+     riesce, il modulo torna a comportarsi come prima e la persona manda il
+     messaggio da sé: in nessun caso la richiesta si perde in silenzio. */
+  var INDIRIZZO_RICHIESTE = 'https://script.google.com/macros/s/AKfycbwYRncGpmLfvelAGGhykGuhE5E51oH48a68rJkRMekjcDV6E2umLfNnbEjnq9nlj6TsUQ/exec';
+
   function erroreDi(campo) {
     return document.getElementById('e-' + campo);
   }
@@ -198,7 +205,7 @@
   /* Tre strade vere invece di una sola: WhatsApp, Gmail e il programma di posta.
      Prima il modulo apriva soltanto mailto: e su chi non ha un client di posta
      configurato non succedeva nulla. */
-  function mostraEsito(modulo) {
+  function mostraEsito(modulo, inviata) {
     var testo = componiTesto(modulo);
     var cond = valore(modulo, 'condominio');
     var oggetto = '[Sito] ' + (valore(modulo, 'tipo') || 'Richiesta') + (cond ? ' \u2014 ' + cond : '');
@@ -213,9 +220,14 @@
     esito.className = 'esito';
     esito.setAttribute('role', 'status');
     esito.innerHTML =
-      '<h3>La richiesta \u00e8 pronta. Scegliete come inviarcela.</h3>' +
-      '<p class="esito__nota">Nessun dato \u00e8 stato trasmesso a questo sito: il messaggio ' +
-      'parte da voi, con lo strumento che preferite.</p>' +
+      (inviata
+        ? '<h3>Richiesta ricevuta. Vi rispondiamo entro due giorni lavorativi.</h3>' +
+          '<p class="esito__nota">\u00c8 arrivata allo studio ed \u00e8 gi\u00e0 in lista. ' +
+          'Se nel frattempo volete anticiparci qualcosa, o se la cosa \u00e8 urgente, ' +
+          'potete mandarci lo stesso messaggio anche per una di queste vie.</p>'
+        : '<h3>La richiesta \u00e8 pronta. Scegliete come inviarcela.</h3>' +
+          '<p class="esito__nota">Non siamo riusciti a recapitarla in automatico, ' +
+          'quindi ci pensate voi: il messaggio \u00e8 gi\u00e0 scritto, scegliete lo strumento.</p>') +
       '<div class="esito__vie">' +
         '<a class="btn btn--primary" target="_blank" rel="noopener" href="' + wa + '">Invia su WhatsApp</a>' +
         '<a class="btn btn--outline" target="_blank" rel="noopener" href="' + gmail + '">Invia con Gmail</a>' +
@@ -248,6 +260,30 @@
     esito.querySelector('h3').focus();
   }
 
+  /* Prima si prova la strada normale, che permette di leggere la risposta e
+     quindi di sapere davvero se è arrivata. Se il browser la blocca si riprova
+     alla cieca, che passa quasi sempre. Se non passa nemmeno quella si dice la
+     verità e si lasciano le tre vie manuali. */
+  function recapita(modulo) {
+    if (!INDIRIZZO_RICHIESTE || typeof fetch !== 'function') {
+      return Promise.resolve(false);
+    }
+    var dati = new URLSearchParams();
+    ['nome', 'telefono', 'email', 'tipo', 'condominio', 'messaggio', 'sito'].forEach(function (c) {
+      dati.append(c, valore(modulo, c));
+    });
+    dati.append('pagina', location.pathname);
+
+    return fetch(INDIRIZZO_RICHIESTE, { method: 'POST', body: dati })
+      .then(function (r) { return r.json(); })
+      .then(function (esito) { return !!(esito && esito.ok); })
+      .catch(function () {
+        return fetch(INDIRIZZO_RICHIESTE, { method: 'POST', mode: 'no-cors', body: dati })
+          .then(function () { return true; })
+          .catch(function () { return false; });
+      });
+  }
+
   Array.prototype.forEach.call(document.querySelectorAll('form.form'), function (modulo) {
     modulo.addEventListener('submit', function (ev) {
       ev.preventDefault();
@@ -268,8 +304,12 @@
       }
 
       var bottone = modulo.querySelector('button[type="submit"]');
-      if (bottone) { bottone.disabled = true; bottone.textContent = 'Richiesta pronta'; }
-      mostraEsito(modulo);
+      if (bottone) { bottone.disabled = true; bottone.textContent = 'Invio in corso\u2026'; }
+
+      recapita(modulo).then(function (riuscito) {
+        if (bottone) bottone.textContent = riuscito ? 'Richiesta inviata' : 'Richiesta pronta';
+        mostraEsito(modulo, riuscito);
+      });
     });
 
     /* pulizia dell'errore mentre si scrive */
