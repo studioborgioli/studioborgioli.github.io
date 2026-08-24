@@ -39,9 +39,29 @@
      il gesto dello scorrimento è quello con cui si legge il sito. */
   var daComputer = window.matchMedia('(pointer: fine)').matches && window.innerWidth >= 900;
 
+  /* La soglia d'ingresso è un saluto, non un pedaggio: chi l'ha già vista
+     entra diretto per un mese. Si segna una data sola nella memoria del
+     browser di chi visita — nessun dato personale, niente che arrivi a noi.
+     Se la memoria non è disponibile (navigazione in incognito, impostazioni
+     restrittive) la schermata si comporta come prima. */
+  var CHIAVE_INTRO = 'sb-ingresso-visto';
+  var GIORNI_INTRO = 30;
+
+  function giaVista() {
+    try {
+      var quando = parseInt(window.localStorage.getItem(CHIAVE_INTRO), 10);
+      if (!quando) return false;
+      return (Date.now() - quando) < GIORNI_INTRO * 24 * 60 * 60 * 1000;
+    } catch (e) { return false; }
+  }
+
+  function segnaVista() {
+    try { window.localStorage.setItem(CHIAVE_INTRO, String(Date.now())); } catch (e) {}
+  }
+
   if (!intro) {
     avviaDisegno();
-  } else if (ridotto || !daComputer) {
+  } else if (ridotto || !daComputer || giaVista()) {
     intro.parentNode.removeChild(intro);
     avviaDisegno();
   } else {
@@ -75,6 +95,7 @@
       if (chiusa) return;
       chiusa = true;
       riempi.style.width = '100%';
+      segnaVista();
       intro.classList.add('intro--via');
       document.documentElement.classList.remove('intro--bloccato');
       document.body.classList.remove('intro--bloccato');
