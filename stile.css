@@ -212,11 +212,30 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .logo__marchio { height: 46px; width: 172px; overflow: visible; }
 @media (max-width: 900px) { .logo__marchio { height: 42px; width: 158px; } }
 
-/* Sotto i 620px resta il solo monogramma: il nome per esteso non entrerebbe
-   e verrebbe schiacciato. Si riduce la finestra del disegno, non le lettere. */
+/* Sotto i 620px il nome disegnato dentro il marchio verrebbe schiacciato:
+   si tiene il solo monogramma e il nome torna accanto come testo vero, su due
+   righe. Da telefono e da app installata "Studio Borgioli" si legge sempre. */
+.logo__testo, .logo__mono { display: none; }
+.logo__mono { height: 38px; width: 50px; overflow: visible; }
 @media (max-width: 620px) {
-  .logo__marchio { width: 62px; }
-  .logo__nome, .logo__coda { display: none; }
+  .logo__marchio { display: none; }
+  .logo__mono { display: block; }
+  .logo__testo {
+    display: block; margin-left: var(--space-2);
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 17px; line-height: 1.06; color: var(--color-primary);
+    max-width: 4.8em;
+  }
+}
+@media (max-width: 380px) {
+  .logo__testo { font-size: 15px; }
+}
+
+/* sul bottone del preventivo, quando lo spazio è poco, resta la sola parola */
+.nav__cta__corto { display: none; }
+@media (max-width: 620px) {
+  .nav__cta__lungo { display: none; }
+  .nav__cta__corto { display: inline; }
 }
 
 .logo__s, .logo__b, .logo__nome {
