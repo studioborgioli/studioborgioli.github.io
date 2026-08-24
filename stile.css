@@ -622,6 +622,17 @@ html.intro--bloccato, body.intro--bloccato { overflow: hidden; height: 100%; }
   font-weight: 700; font-size: 15px; color: var(--color-secondary);
 }
 
+/* sotto la mappa, il collegamento alla pagina della singola sede: serve a chi
+   cerca "amministratore a Signa" e finisce prima su una scheda che sul sito */
+.sede__pagina {
+  margin-top: var(--space-2);
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  font-size: 14px; color: var(--color-text-2);
+  text-decoration: underline; text-underline-offset: 3px;
+  text-decoration-color: rgba(26,58,92,.28);
+}
+.sede__pagina:hover { color: var(--color-secondary); text-decoration-color: currentColor; }
+
 /* --------------------------------------------------------------- passi -- */
 .passi { counter-reset: passo; }
 .passo {
