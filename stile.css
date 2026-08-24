@@ -819,3 +819,76 @@ blockquote cite {
     animation: none !important;
   }
 }
+
+
+/* ------------------------------------------------------- pagine di sede -- */
+/* La scheda in apertura tiene insieme le tre cose che una persona cerca
+   quando arriva qui da una ricerca: dove siete, se siete aperti adesso,
+   come vi raggiungo. Tutto sopra la piega, senza scorrere. */
+.scheda-sede {
+  margin-top: var(--space-8);
+  display: grid; grid-template-columns: 1.15fr .85fr; gap: 0;
+  border: 1px solid var(--color-line); border-radius: 14px;
+  background: var(--color-surface); box-shadow: var(--shadow-2);
+  overflow: hidden;
+}
+@media (max-width: 860px) { .scheda-sede { grid-template-columns: 1fr; } }
+
+.scheda-sede__dati { padding: var(--space-8); }
+.scheda-sede__azioni {
+  padding: var(--space-8); background: var(--color-surface-2);
+  border-left: 1px solid var(--color-line);
+  display: flex; flex-direction: column; gap: var(--space-3);
+}
+@media (max-width: 860px) {
+  .scheda-sede__azioni { border-left: 0; border-top: 1px solid var(--color-line); }
+}
+.scheda-sede__azioni .btn { width: 100%; justify-content: center; }
+.scheda-sede__riga { display: flex; gap: var(--space-3); margin-bottom: var(--space-5); }
+.scheda-sede__riga:last-child { margin-bottom: 0; }
+.scheda-sede__riga svg { flex: none; margin-top: 3px; color: var(--color-secondary); }
+.scheda-sede__via { font-family: var(--font-display); font-weight: 700; font-size: 20px; }
+.scheda-sede__nota {
+  margin-top: var(--space-4); font-size: 14px; color: var(--color-text-2); line-height: 1.5;
+}
+
+/* stato di apertura calcolato sull'ora di Roma: verde se aperto, grigio se no.
+   Se JavaScript non parte non compare nulla e gli orari restano leggibili. */
+.stato {
+  display: none; align-items: flex-start; gap: var(--space-2); line-height: 1.35;
+  margin-top: var(--space-4); padding: 6px 12px 6px 10px;
+  border-radius: 999px; font-size: 14px; font-weight: 700;
+  background: rgba(56,161,105,.10); color: #26714A;
+}
+.stato--visibile { display: inline-flex; }
+.stato--chiuso { background: rgba(93,107,125,.12); color: var(--color-text-2); }
+.stato__pallino {
+  width: 9px; height: 9px; margin-top: 6px; border-radius: 50%;
+  background: var(--color-success); flex: none;
+}
+.stato--chiuso .stato__pallino { background: var(--color-text-2); }
+.stato__poi { font-weight: 400; }
+
+/* le frazioni servite: etichette, non un elenco puntato */
+.zona-elenco { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-6) 0 0; padding: 0; list-style: none; }
+.zona-elenco li {
+  padding: 6px 14px; border: 1px solid var(--color-line); border-radius: 999px;
+  font-size: 15px; color: var(--color-text-2); background: var(--color-surface);
+}
+
+/* rimando incrociato alle altre due sedi, in fondo a ogni pagina di sede */
+.altre-sedi { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); margin-top: var(--space-8); }
+@media (max-width: 700px) { .altre-sedi { grid-template-columns: 1fr; } }
+.altra-sede {
+  display: block; padding: var(--space-6); text-decoration: none;
+  border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-surface);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.altra-sede:hover { border-color: var(--color-secondary); box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.altra-sede h3 { margin: 0 0 4px; font-size: 20px; color: var(--color-primary); }
+.altra-sede p { margin: 0; font-size: 15px; color: var(--color-text-2); }
+.altra-sede__vai {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  margin-top: var(--space-4); font-weight: 700; font-size: 15px; color: var(--color-secondary);
+}
+@media (prefers-reduced-motion: reduce) { .altra-sede:hover { transform: none; } }

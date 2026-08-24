@@ -284,6 +284,104 @@
       });
   }
 
+
+  /* ------------------------------------------------- stato di apertura --
+     Sulle pagine di sede dice se lo sportello è aperto in questo momento.
+     Si calcola sull'ora di Roma, non su quella del visitatore, e tiene conto
+     delle chiusure dello studio. Se qualcosa non torna non mostra nulla:
+     meglio nessuna scritta che una scritta sbagliata. */
+
+  /* periodi di chiusura, in formato GG/MM: la pausa natalizia si ripete ogni
+     anno. Le ferie estive cambiano data e vanno aggiunte qui ogni anno. */
+  var CHIUSURE = [
+    { da: '24/12', a: '06/01', nome: 'chiusura natalizia' }
+  ];
+
+  function oraDiRoma() {
+    try {
+      var f = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Rome', weekday: 'short', hour: '2-digit',
+        minute: '2-digit', day: '2-digit', month: '2-digit', hour12: false
+      });
+      var p = {};
+      f.formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+      var giorni = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 0 };
+      if (!(p.weekday in giorni)) return null;
+      return {
+        giorno: giorni[p.weekday],
+        minuti: parseInt(p.hour, 10) * 60 + parseInt(p.minute, 10),
+        gg: p.day, mm: p.month
+      };
+    } catch (e) { return null; }
+  }
+
+  function dentroUnaChiusura(ora) {
+    var oggi = parseInt(ora.mm, 10) * 100 + parseInt(ora.gg, 10);
+    for (var i = 0; i < CHIUSURE.length; i++) {
+      var c = CHIUSURE[i];
+      var da = parseInt(c.da.slice(3), 10) * 100 + parseInt(c.da.slice(0, 2), 10);
+      var a  = parseInt(c.a.slice(3), 10) * 100 + parseInt(c.a.slice(0, 2), 10);
+      var dentro = da <= a ? (oggi >= da && oggi <= a) : (oggi >= da || oggi <= a);
+      if (dentro) return c;
+    }
+    return null;
+  }
+
+  function inMinuti(hhmm) {
+    var p = hhmm.split(':');
+    return parseInt(p[0], 10) * 60 + parseInt(p[1], 10);
+  }
+
+  var NOMI = ['domenica', 'lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato'];
+
+  function statoSede(el) {
+    var fasce;
+    try { fasce = JSON.parse(el.getAttribute('data-orari')); } catch (e) { return; }
+    if (!fasce || !fasce.length) return;
+    var ora = oraDiRoma();
+    if (!ora) return;
+
+    var pallino = '<span class="stato__pallino" aria-hidden="true"></span>';
+    var chiusura = dentroUnaChiusura(ora);
+    if (chiusura) {
+      el.className = 'stato stato--chiuso stato--visibile';
+      el.innerHTML = pallino + '<span>Chiuso <span class="stato__poi">per ' + chiusura.nome + '</span></span>';
+      return;
+    }
+
+    /* aperto adesso? */
+    for (var i = 0; i < fasce.length; i++) {
+      var f = fasce[i];
+      if (f.giorni.indexOf(ora.giorno) === -1) continue;
+      if (ora.minuti >= inMinuti(f.da) && ora.minuti < inMinuti(f.a)) {
+        el.className = 'stato stato--visibile';
+        el.innerHTML = pallino + '<span>Aperto ora <span class="stato__poi">· chiude alle ' + f.a + '</span></span>';
+        return;
+      }
+    }
+
+    /* altrimenti si cerca la prima apertura utile nei sette giorni seguenti */
+    for (var d = 0; d <= 7; d++) {
+      var g = (ora.giorno + d) % 7;
+      var migliore = null;
+      for (var j = 0; j < fasce.length; j++) {
+        var fa = fasce[j];
+        if (fa.giorni.indexOf(g) === -1) continue;
+        if (d === 0 && inMinuti(fa.da) <= ora.minuti) continue;
+        if (!migliore || inMinuti(fa.da) < inMinuti(migliore.da)) migliore = fa;
+      }
+      if (migliore) {
+        var quando = d === 0 ? 'oggi' : (d === 1 ? 'domani' : NOMI[g]);
+        el.className = 'stato stato--chiuso stato--visibile';
+        el.innerHTML = pallino + '<span>Chiuso ora <span class="stato__poi">· riapre ' +
+                       quando + ' alle ' + migliore.da + '</span></span>';
+        return;
+      }
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.stato[data-orari]'), statoSede);
+
   Array.prototype.forEach.call(document.querySelectorAll('form.form'), function (modulo) {
     modulo.addEventListener('submit', function (ev) {
       ev.preventDefault();
