@@ -366,29 +366,37 @@ button, input, select, textarea { font: inherit; color: inherit; }
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
 }
-/* il tratto si disegna quando la pagina è pronta */
+/* il tratto si disegna quando la pagina è pronta.
+   Il disegno ha quasi duecento tratti: invece di scaglionarli a mano con
+   nth-child, ogni tracciato porta il proprio numero d'ordine in --i e il
+   ritardo si calcola da lì. La penna attraversa il foglio in un secondo e
+   mezzo, poi ogni tratto ci mette il suo tempo a chiudersi. */
 .disegna .villa__tratto path {
-  animation: traccia 2.6s cubic-bezier(.55,.15,.35,1) forwards;
+  animation: traccia 1.4s cubic-bezier(.55,.15,.35,1) forwards;
+  animation-delay: calc(var(--i, 0) * 0.008s);
 }
-.villa__tratto path:nth-child(1), .villa__tratto path:nth-child(2) { animation-delay: 0s; }
-.villa__tratto path:nth-child(3) { animation-delay: .25s; }
-.villa__tratto path:nth-child(4) { animation-delay: .45s; }
-.villa__tratto path:nth-child(n+5) { animation-delay: .7s; }
-.villa__tratto path:nth-child(n+9) { animation-delay: .95s; }
-.villa__tratto path:nth-child(n+14) { animation-delay: 1.2s; }
 @keyframes traccia { to { stroke-dashoffset: 0; } }
 
-/* i due cipressi respirano, appena appena */
+/* i due alberi vicino al parco respirano, appena appena, a disegno finito */
 .disegna .villa__cipresso {
   transform-box: fill-box; transform-origin: 50% 100%;
-  animation: traccia 2.6s cubic-bezier(.55,.15,.35,1) forwards,
-             respiro 9s ease-in-out 2.8s infinite;
+  animation: traccia 1.4s cubic-bezier(.55,.15,.35,1) forwards,
+             respiro 9s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.008s), 3.4s;
 }
 @keyframes respiro {
   0%, 100% { transform: rotate(calc(var(--r) * 0.7deg)); }
   50%      { transform: rotate(calc(var(--r) * -0.7deg)); }
 }
-@media (max-width: 767px) { .villa { width: 100%; height: 62%; opacity: .7; } }
+/* Da telefono il disegno finisce sotto ai bottoni: si abbassa, si accorcia e
+   sfuma anche dall'alto, così resta un fondo e non un disturbo sotto al testo. */
+@media (max-width: 767px) {
+  .villa {
+    width: 112%; height: 38%; right: -10%; opacity: .42;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 55%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 55%);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .villa__tratto path { stroke-dashoffset: 0; animation: none !important; }
 }
