@@ -39,6 +39,14 @@
      il gesto dello scorrimento è quello con cui si legge il sito. */
   var daComputer = window.matchMedia('(pointer: fine)').matches && window.innerWidth >= 900;
 
+  /* Quando il sito è aperto dall'icona sulla schermata del telefono si comporta
+     come un'applicazione, e un'applicazione un avvio col marchio ce l'ha.
+     Lì la soglia non si scorre — non c'è rotella e lo scorrimento serve a
+     leggere: il filetto si carica da sé in un attimo e poi si apre. */
+  var daApp = window.matchMedia('(display-mode: standalone)').matches ||
+              window.matchMedia('(display-mode: fullscreen)').matches ||
+              window.navigator.standalone === true;
+
   /* La soglia d'ingresso è un saluto, non un pedaggio: chi l'ha già vista
      entra diretto per un mese. Si segna una data sola nella memoria del
      browser di chi visita — nessun dato personale, niente che arrivi a noi.
@@ -61,7 +69,7 @@
 
   if (!intro) {
     avviaDisegno();
-  } else if (ridotto || !daComputer || giaVista()) {
+  } else if (ridotto || (!daComputer && !daApp) || (!daApp && giaVista())) {
     intro.parentNode.removeChild(intro);
     avviaDisegno();
   } else {
@@ -81,7 +89,7 @@
       var pc = Math.round(carica * 100);
       riempi.style.width = pc + '%';
       pista.setAttribute('aria-valuenow', String(pc));
-      if (pc > 55 && nota) nota.textContent = 'Ancora un poco';
+      if (pc > 55 && nota && !daApp) nota.textContent = 'Ancora un poco';
       if (carica >= 1) entra();
     }
 
@@ -122,8 +130,24 @@
     salta.addEventListener('click', entra);
     intro.addEventListener('click', function (ev) { if (ev.target === intro) entra(); });
 
-    /* rete di sicurezza: dopo dodici secondi si entra comunque */
-    window.setTimeout(entra, 12000);
+    if (daApp) {
+      /* avvio dell'applicazione: nessun gesto richiesto, un tocco basta a saltare */
+      intro.classList.add('intro--app');
+      if (nota) nota.textContent = 'Studio Borgioli';
+      if (salta) salta.hidden = true;
+      intro.addEventListener('click', entra);
+      /* il filetto si carica da sé: la larghezza cambia una volta sola e ci
+         pensa la transizione del CSS, poi si apre */
+      window.setTimeout(function () {
+        if (chiusa) return;
+        riempi.style.width = '100%';
+        pista.setAttribute('aria-valuenow', '100');
+      }, 80);
+      window.setTimeout(entra, 1700);
+    } else {
+      /* rete di sicurezza: dopo dodici secondi si entra comunque */
+      window.setTimeout(entra, 12000);
+    }
   }
 
   /* ------------------------------------------- ricerca fra le domande
